@@ -10,3 +10,4 @@ instance/test.db
 
 # Ignore environment files (optional)
 .envnode_modules/
+node_modules/
