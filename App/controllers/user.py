@@ -3,26 +3,38 @@ from App.database import db
 
 def create_user(username, password, user_type):
     try:
+        # Check if user already exists
+        existing_user = get_user_by_username(username)
+        if existing_user:
+            return False
+        
         newuser = User(username=username, password=password, role=user_type)
         db.session.add(newuser)
         db.session.flush() 
         
+        role_user = None
+        
         if user_type == "student":
             student = Student(username=username, user_id=newuser.id)
             db.session.add(student)
+            role_user = student
         elif user_type == "employer":
             employer = Employer(username=username, user_id=newuser.id)
             db.session.add(employer)
+            role_user = employer
         elif user_type == "staff":
             staff = Staff(username=username, user_id=newuser.id)
             db.session.add(staff)
+            role_user = staff
         else:
+            db.session.rollback()
             return False
         
         db.session.commit()
-        return True
+        return role_user  # Return the Student/Employer/Staff object
     except Exception as e:
         db.session.rollback()
+        print(f"Error creating user: {e}")
         return False
 
 
