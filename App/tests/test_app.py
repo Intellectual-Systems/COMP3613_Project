@@ -56,12 +56,12 @@ class UserUnitTests(unittest.TestCase):
         assert position.title is not None
 
     def test_new_shortlist(self):
-        # Shortlist may need a title parameter
+        from App.models.shortlist import DecisionStatus
         shortlist = Shortlist(1, 2, 3, "Test Position")
         assert shortlist.student_id == 1
         assert shortlist.position_id == 2
         assert shortlist.staff_id == 3
-        assert shortlist.status == "pending"
+        assert shortlist.status == DecisionStatus.pending
 
     def test_get_json(self):
         user = User("bob", "bobpass", "user")
