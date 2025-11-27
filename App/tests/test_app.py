@@ -80,6 +80,8 @@ class UserUnitTests(unittest.TestCase):
         user = User("bob", password, "user")
         assert user.check_password(password)
 
+#NEGATIVE UNIT TESTS
+
     def test_invalid_password_check(self):
         password = "mypass"
         user = User("bob", password, "user")
