@@ -1,10 +1,6 @@
-from App.models import db
 from abc import ABC, abstractmethod
 
-class ApplicationState(db.Model, ABC):
-    __tablename__ = 'application_state'
-    id = db.Column(db.Integer, primary_key=True)
-    state = db.Column(db.String(50), nullable=False, unique=True)
+class ApplicationState(ABC):
 
     def __init__(self, state, description=None):
         self.state = state

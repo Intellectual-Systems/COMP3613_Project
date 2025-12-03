@@ -17,3 +17,5 @@ class Staff(db.Model):
         db.session.add(shortlist)
         db.session.commit()
         return shortlist
+
+    # How to make application connected to rest of system?

@@ -2,6 +2,7 @@ from App.database import db
 from App.models.user import User
 from sqlalchemy.ext.hybrid import hybrid_property
 from datetime import date
+from App.models.application import Application
 
 class Student(db.Model):
     __tablename__ = 'student'
@@ -19,6 +20,12 @@ class Student(db.Model):
     def __init__(self, username, user_id):
         self.username = username
         self.user_id = user_id
+
+    def create_application(self, position_id, application_state):
+        application = Application(applicant_id=self.id, position_id=position_id, application_state=application_state)
+        db.session.add(application)
+        db.session.commit()
+        return application
 
 #    def update_DOB(self, date):
 #        self.DOB = date

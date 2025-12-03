@@ -1,13 +1,6 @@
-from App.models import db
 from App.models.applicationstate import ApplicationState
 
 class ShortlistedState(ApplicationState):
-    __tablename__ = 'shortlisted_state'
-    id = db.Column(db.Integer, db.ForeignKey('application_state.id'), primary_key=True)
-
-    __mapper_args__ = {
-        'polymorphic_identity': 'shortlisted_state',
-    }
 
     def __init__(self, description=None):
         super().__init__('Shortlisted', description)

@@ -4,20 +4,38 @@
 
 ## Recent Changes
 
-- Added ApplicationState and various classes that implement it, including:
-    - Appliedstate
-    - ShortlistedState
-    - AcceptedState
-    - RejectedState
+- Made ApplicationState soley an abstract Python class (as opposed to it being a table). This:
+    - Avoids the conflict from attempting to inherit from both db and ABC
+    - Simplifies the database. Tables for metadata such as an application's state do not need to exist as separate tables as the Application table, which already is a table, has a state attribute
 
-- Added an ApplicationState attribute to Application that references the ApplicationState table
+- Made some changes to requirements.txt:
+    - Removed the following duplicate requirements:
+        - click==8.1.3
+        - Flask==2.3.3
+        - Flask-Admin==1.6.1
+        - Flask-Cors==3.0.10
+        - Flask-JWT-Extended==4.4.4
+        - Flask-Migrate==3.1.0
+        - Flask-Reuploaded==1.2.0
+        - Flask-SQLAlchemy==3.1.1
+        - gevent==22.10.2
+        - gunicorn==20.1.0
+        - psycopg2-binary==2.9.9
+        - pytest==7.0.1
+        - python-dotenv==1.0.1
+        - rich==13.4.2
+        - Werkzeug>=3.0.0
+    - Changed gevent version to make it compatible with Python 3.12:
+        - gevent==22.10.2 -> gevent>=23.12.0
+
 
 ## Next Tasks
 
-- Currently, the system does not work with Applications (due to previous lack of it). Must refactor system such that it uses it, which includes:
-    - Student must create an application before they can be shorlisted
-    - Staff must be able to view applications for positions under their employer
-    - Application and ApplicationState should handle shorlisting and acceptance/rejection as opposed to Staff and Employer handling it
+- Remove unecessary functions from user classes, such as:
+    - Staff: add_to_shortlist
+    - Student: create_application
+
+- Review commands and if necessary implement missing commands
 
 # Flask MVC Template
 A template for flask applications structured in the Model View Controller pattern [Demo](https://dcit-flaskmvc.herokuapp.com/). [Postman Collection](https://documenter.getpostman.com/view/583570/2s83zcTnEJ)
