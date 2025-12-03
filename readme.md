@@ -1,5 +1,24 @@
 ![Tests](https://github.com/uwidcit/flaskmvc/actions/workflows/dev.yml/badge.svg)
 
+# Development Notes
+
+## Recent Changes
+
+- Added ApplicationState and various classes that implement it, including:
+    - Appliedstate
+    - ShortlistedState
+    - AcceptedState
+    - RejectedState
+
+- Added an ApplicationState attribute to Application that references the ApplicationState table
+
+## Next Tasks
+
+- Currently, the system does not work with Applications (due to previous lack of it). Must refactor system such that it uses it, which includes:
+    - Student must create an application before they can be shorlisted
+    - Staff must be able to view applications for positions under their employer
+    - Application and ApplicationState should handle shorlisting and acceptance/rejection as opposed to Staff and Employer handling it
+
 # Flask MVC Template
 A template for flask applications structured in the Model View Controller pattern [Demo](https://dcit-flaskmvc.herokuapp.com/). [Postman Collection](https://documenter.getpostman.com/view/583570/2s83zcTnEJ)
 
