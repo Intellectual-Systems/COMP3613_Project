@@ -1,13 +1,13 @@
 from flask import Blueprint, render_template, jsonify, request, send_from_directory, flash, redirect, url_for
 from flask_jwt_extended import jwt_required, current_user as jwt_current_user
+from functools import wraps
 
 from.index import index_views
 
 from App.controllers import (
     create_user,
     get_all_users,
-    get_all_users_json,
-    jwt_required
+    get_all_users_json
 )
 
 user_views = Blueprint('user_views', __name__, template_folder='../templates')
@@ -38,3 +38,34 @@ def create_user_endpoint():
 @user_views.route('/static/users', methods=['GET'])
 def static_user_page():
   return send_from_directory('static', 'static-user.html')
+
+'''
+Permissions
+'''
+
+def requires_permission(perm):
+    def decorator(func):
+        @wraps(func)
+        def wrapper(*args, **kwargs):
+            # jwt_current_user is only available after @jwt_required() runs
+            user = jwt_current_user
+
+            if not user:
+                return jsonify({"error": "User not authenticated"}), 401
+            
+            print("Permission: " + perm)
+            print("User info:\n\n" + user)
+
+            # if perm != "student":
+            #     print("Permission denied")
+            print("Permission granted")
+            # func()
+            return func(*args, **kwargs)
+        return wrapper
+    return decorator
+
+@user_views.route('/permission-test', methods=['GET'])
+@jwt_required()
+@requires_permission("test-permission")
+def permission_test():
+    return jsonify({"message": "Test successful"}), 200

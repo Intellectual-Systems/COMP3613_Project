@@ -4,9 +4,11 @@
 
 ## Recent Changes
 
-- Refactored Student_Position name to Shortlist
+- Added code to test permission system
 
 ## Next Tasks
+
+- Solve issue with requesting from postman
 
 -  Attempt to save Student_Position/Shortlist to separate file
 

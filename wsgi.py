@@ -15,6 +15,9 @@ from App.models.position import Position
 # from App.models.position import Position
 from App.models.employer import Employer
 
+from flask_jwt_extended import jwt_required, current_user
+from functools import wraps
+
 # This commands file allow you to create convenient CLI commands for testing controllers
 
 app = create_app()
@@ -193,6 +196,8 @@ Employer Commands
 '''
 
 employer_cli = AppGroup('employer', help='Employer object commands')
+
+@jwt_required
 @employer_cli.command("list", help="Lists all employers in the database")
 def list_employers_command():
     employers = get_all_employers()
@@ -728,3 +733,62 @@ def delete_position_command():
     print(f"\nPosition '{position.positionTitle}' deleted successfully.\n")
 
 app.cli.add_command(position_cli)
+
+'''
+Permissions and App Simulation
+'''
+
+# def requires_permission(perm):
+#     def decorator(func):
+#         @wraps(func)
+#         def wrapper():
+
+#             user = current_user
+
+#             if not user:
+#                 print("Test failed. User not authenticated")
+#                 return
+            
+#             print("Permission: " + perm)
+#             print("User info:\n\n" + user)
+
+#             # if perm != "student":
+#             #     print("Permission denied")
+#         print("Permission granted")
+#         func()
+#         return wrapper
+#     return decorator
+
+# @requires_permission("student")
+# def permission_test():
+#     print("\n\nTest Successful")
+
+# print("1. Option")
+# print("2. Option")
+# print("3. Option")
+
+# choice = 0
+
+# while choice != 3:
+#     choice = int(input("Enter choice: "))
+
+#     if choice == 1:
+#         print("Option 1 entered")
+#         @requires_permission("student")
+#         def option_1():
+#             print("Option 1 selected")
+
+#         option_1()
+
+#     elif choice == 2:
+#         @requires_permission("employer")
+#         def option_2():
+#             print("Option 2 selected")
+
+#         option_2()
+
+#     elif choice == 3:
+#         print("Exiting...")
+
+#     else:
+#         print("Invalid choice")
