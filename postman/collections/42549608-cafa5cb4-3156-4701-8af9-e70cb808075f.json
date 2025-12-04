@@ -610,7 +610,7 @@
 			"response": []
 		},
 		{
-			"name": "(Staff) Add Student to Shortlist Copy",
+			"name": "(Staff) Bad Add Student to Shortlist",
 			"event": [
 				{
 					"listen": "test",
