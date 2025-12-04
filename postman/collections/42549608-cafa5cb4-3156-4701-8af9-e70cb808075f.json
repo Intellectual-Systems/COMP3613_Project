@@ -24,7 +24,7 @@
 			"response": []
 		},
 		{
-			"name": "Initialize App Copy",
+			"name": "Initialize App",
 			"event": [
 				{
 					"listen": "test",
