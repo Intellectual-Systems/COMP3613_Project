@@ -462,6 +462,37 @@
 		},
 		{
 			"name": "Login Staff",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "a45cdc7f-ab3d-409e-85b3-9ef3ecb8b3dd",
+						"exec": [
+							"pm.test('Response status code is 200', function () {\r",
+							"    pm.expect(pm.response.code).to.equal(200);\r",
+							"})\r",
+							"\r",
+							"pm.test('Response has the required field - access_token', function () {\r",
+							"    const responseData = pm.response.json();\r",
+							"    pm.environment.set('access_token', responseData.access_token);\r",
+							"    pm.expect(responseData.access_token).to.exist;\r",
+							"})\r",
+							"\r",
+							"pm.test('Access token is a non-empty string', function () {\r",
+							"    const responseData = pm.response.json();\r",
+							"    pm.expect(responseData.access_token).to.be.a('string').and.to.have.lengthOf.at.least(1, 'Value should not be empty');\r",
+							"})\r",
+							"\r",
+							"pm.test(\"Response time is in an acceptable range\", function () {\r",
+							"    pm.expect(pm.response.responseTime).to.be.below(500);\r",
+							"});"
+						],
+						"type": "text/javascript",
+						"packages": {},
+						"requests": {}
+					}
+				}
+			],
 			"id": "42549608-572a85b5-fdd1-4e96-bbfd-04a5f8db1cb8",
 			"protocolProfileBehavior": {
 				"disableBodyPruning": true
