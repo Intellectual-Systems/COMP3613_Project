@@ -4,6 +4,12 @@
 
 ## Recent Changes
 
+- Commented out most of the previous code for Shortlist, Staff, Employer, Position
+
+- Added controllers for Staff and Employer
+
+- Added commands for Staff, Employer and Position
+
 - Refactored Student model heavily:
     - Removed unecessary attributes including userid, dob, gender, email, etc.
     - Changed it to inherit from User instead of db.Model
@@ -16,15 +22,15 @@
 
 ## Next Tasks
 
-- Heavy refactoring of:
-    - Position
-    - Shortlist
-    - Staff
-    - Employer
-
-- Add views per user type
+- Review commands for Employer and Position
 
 - Add all necessary commands
+
+- Review old code and merge functionality if necessary
+
+- Review Models
+
+- Add views per user type
 
 - Remove unecessary functions from user classes, such as:
     - Staff: add_to_shortlist

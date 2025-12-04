@@ -4,27 +4,27 @@ from sqlalchemy.ext.hybrid import hybrid_property
 from datetime import date
 from App.models.application import Application
 
-# class Student_Position(db.Model):
-#     __tablename__ = 'student_position'
-#     studentID = db.Column(db.Integer, db.ForeignKey('student.id'), primary_key=True)
-#     positionID = db.Column(db.Integer, db.ForeignKey('internshipposition.id'), primary_key=True)
-#     status = db.Column(db.String(20), nullable=False, default='pending')
-#     employer_response = db.Column(db.String(20), nullable=True, default=None)
+class Student_Position(db.Model):
+    __tablename__ = 'student_position'
+    studentID = db.Column(db.Integer, db.ForeignKey('student.id'), primary_key=True)
+    positionID = db.Column(db.Integer, db.ForeignKey('internshipposition.id'), primary_key=True)
+    status = db.Column(db.String(20), nullable=False, default='pending')
+    employer_response = db.Column(db.String(20), nullable=True, default=None)
 
-#     def __init__(self, studentID, positionID):
-#         self.studentID = studentID
-#         self.positionID = positionID
+    def __init__(self, studentID, positionID):
+        self.studentID = studentID
+        self.positionID = positionID
 
-#     def get_json(self):
-#         return {
-#             'studentID': self.studentID,
-#             'positionID': self.positionID,
-#             'status': self.status,
-#             'employer_response': self.employer_response
-#         }
+    def get_json(self):
+        return {
+            'studentID': self.studentID,
+            'positionID': self.positionID,
+            'status': self.status,
+            'employer_response': self.employer_response
+        }
 
-#     def __repr__(self):
-#         return f"Student_Position[studentID= {self.studentID} -> positionID= {self.positionID}, status= {self.status}, employer_response= {self.employer_response}]"
+    def __repr__(self):
+        return f"Student_Position[studentID= {self.studentID} -> positionID= {self.positionID}, status= {self.status}, employer_response= {self.employer_response}]"
 
 
 class Student(User):
@@ -35,8 +35,8 @@ class Student(User):
     degree = db.Column(db.String(20), nullable=False)
     gpa = db.Column(db.Integer, nullable=False)
     resume = db.Column(db.String(256))
-    shortlists = db.Column(db.String(256)) # temporary placeholder
-    # shortlists = db.relationship('InternshipPosition', secondary='student_position', back_populates='shortlist')
+    # shortlists = db.Column(db.String(256)) # temporary placeholder
+    shortlists = db.relationship('InternshipPosition', secondary='student_position', back_populates='shortlist')
 
     def __init__(self, username, password, degree, gpa, resume):
         self.username = username

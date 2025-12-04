@@ -1,12 +1,13 @@
 from App.database import db
-from App.models.position import Position
+# from App.models.position import Position
+from App.models.position import InternshipPosition
 from App.models.applicationstate import ApplicationState
 
 class Application(db.Model):
     __tablename__ = 'application'
     id = db.Column(db.Integer, primary_key=True)
     student_id = db.Column(db.Integer, db.ForeignKey('student.id'), nullable=False)
-    position_id = db.Column(db.Integer, db.ForeignKey('position.id'), nullable=False)
+    position_id = db.Column(db.Integer, db.ForeignKey('internshipposition.id'), nullable=False)
     application_state = db.Column(db.String(50), nullable=False, default='Applied')
 
     def __init__(self, student_id, position_id):
