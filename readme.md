@@ -4,15 +4,9 @@
 
 ## Recent Changes
 
-- Reviewed commands to ensure they work
-
-- Added some error handling in wsgi.py
-
-- Refactored name for Position Model (InternshipPosition -> Position)
+- Refactored Student_Position name to Shortlist
 
 ## Next Tasks
-
-- Refactor name for Student_Position to Shorlist
 
 -  Attempt to save Student_Position/Shortlist to separate file
 

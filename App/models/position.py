@@ -11,7 +11,7 @@ class Position(db.Model):
     positionTitle = db.Column(db.String(20), nullable=False)
     department = db.Column(db.String(20), nullable=False)
     description = db.Column(db.String(20), nullable=False)
-    shortlist = db.relationship('Student', secondary='student_position', back_populates='shortlists')
+    shortlist = db.relationship('Student', secondary='shortlist', back_populates='shortlists')
 
     def __init__(self, employerID, positionTitle, department, description):
         self.employerID = employerID

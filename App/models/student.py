@@ -4,8 +4,8 @@ from sqlalchemy.ext.hybrid import hybrid_property
 from datetime import date
 from App.models.application import Application
 
-class Student_Position(db.Model):
-    __tablename__ = 'student_position'
+class Shortlist(db.Model):
+    __tablename__ = 'shortlist'
     studentID = db.Column(db.Integer, db.ForeignKey('student.id'), primary_key=True)
     positionID = db.Column(db.Integer, db.ForeignKey('position.id'), primary_key=True)
     status = db.Column(db.String(20), nullable=False, default='pending')
@@ -24,7 +24,7 @@ class Student_Position(db.Model):
         }
 
     def __repr__(self):
-        return f"Student_Position[studentID= {self.studentID} -> positionID= {self.positionID}, status= {self.status}, employer_response= {self.employer_response}]"
+        return f"Shortlist[studentID= {self.studentID} -> positionID= {self.positionID}, status= {self.status}, employer_response= {self.employer_response}]"
 
 
 class Student(User):
@@ -36,7 +36,7 @@ class Student(User):
     gpa = db.Column(db.Integer, nullable=False)
     resume = db.Column(db.String(256))
     # shortlists = db.Column(db.String(256)) # temporary placeholder
-    shortlists = db.relationship('Position', secondary='student_position', back_populates='shortlist')
+    shortlists = db.relationship('Position', secondary='shortlist', back_populates='shortlist')
 
     def __init__(self, username, password, degree, gpa, resume):
         self.username = username

@@ -9,7 +9,7 @@ from App.controllers import get_all_users_json, initialize, get_all_positions, g
 from App.controllers.student import (get_all_students, create_student, get_student_by_id)
 
 
-from App.models.student import Student, Student_Position
+from App.models.student import Student, Shortlist
 from App.models.staff import Staff
 from App.models.position import Position
 # from App.models.position import Position
@@ -268,9 +268,9 @@ def view_position_shortlist_command():
         print('Position not found.')
         return
 
-    student_positions = view_position_shortlist(position_id)
-    if student_positions:
-        for sp in student_positions:
+    shortlists = view_position_shortlist(position_id)
+    if shortlists:
+        for sp in shortlists:
             print(sp)
     else:
         print('No students found in the shortlist for this position.')
@@ -361,13 +361,13 @@ def accept_reject_command():
         return
 
     print("\nStudents who applied to this position:\n")
-    student_positions = Student_Position.query.filter_by(positionID=position_id).all()
-    for sp in student_positions:
+    shortlists = Shortlist.query.filter_by(positionID=position_id).all()
+    for sp in shortlists:
         student = get_student_by_id(sp.studentID)
         print(f'ID: {student.id} Name: {student.username} Status: {sp.status}')
     
     student_id = input('\nEnter student ID: ')
-    sp = Student_Position.query.filter_by(studentID=student_id, positionID=position_id).first()
+    sp = Shortlist.query.filter_by(studentID=student_id, positionID=position_id).first()
     if not sp:
         print('This student did not apply to this position.')
         return
@@ -485,7 +485,7 @@ def add_to_shortlist_command():
         print('Student not found.')
         return
 
-    sp = Student_Position.query.filter_by(studentID=student_id, positionID=position_id).first()
+    sp = Shortlist.query.filter_by(studentID=student_id, positionID=position_id).first()
     if sp:
         print('Student is already in the shortlist for this position.')
         return
@@ -536,7 +536,7 @@ def remove_from_shortlist_command():
     
     student_id = input('\nEnter student ID to remove: ')
     
-    sp = Student_Position.query.filter_by(studentID=student_id, positionID=position_id).first()
+    sp = Shortlist.query.filter_by(studentID=student_id, positionID=position_id).first()
     if not sp:
         print('\nStudent not found in this position\'s shortlist.')
         return
@@ -605,7 +605,7 @@ def view_shortlists_command():
         print('Student not found.')
         return
 
-    student = Student_Position.query.filter_by(studentID=student_id).all()
+    student = Shortlist.query.filter_by(studentID=student_id).all()
     if student:
         for s in student:
             print(s)
@@ -722,7 +722,7 @@ def delete_position_command():
             return
     
     # Delete associated student positions first
-    Student_Position.query.filter_by(positionID=pos_id).delete()
+    Shortlist.query.filter_by(positionID=pos_id).delete()
     db.session.delete(position)
     db.session.commit()
     print(f"\nPosition '{position.positionTitle}' deleted successfully.\n")

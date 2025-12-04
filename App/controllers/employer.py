@@ -1,6 +1,6 @@
 from App.models.employer import Employer
 from App.models.position import Position
-from App.models.student import Student_Position
+from App.models.student import Shortlist
 from App.database import db
 
 def create_employer(username, password, companyName):
@@ -28,7 +28,7 @@ def view_positions(employerID):
     return positions
 
 def view_position_shortlist(positionID):
-    shortlist = Student_Position.query.filter_by(positionID=positionID).all()
+    shortlist = Shortlist.query.filter_by(positionID=positionID).all()
     if not shortlist:
         return None
     return shortlist
@@ -43,14 +43,14 @@ def acceptReject(employerID, studentID, positionID, status, message=None):
     emp = Employer.query.filter_by(id=employerID).first()
     if not emp:
         return False
-    sp = Student_Position.query.filter_by(studentID=studentID, positionID=positionID).first()
+    sp = Shortlist.query.filter_by(studentID=studentID, positionID=positionID).first()
     if sp:
         sp.status = status
         sp.employer_response = message
 
         # Automatically reject every other student who was shortlisted for this position
         if status.lower() == 'accepted':
-            otherStudents = Student_Position.query.filter_by(positionID=positionID).all()
+            otherStudents = Shortlist.query.filter_by(positionID=positionID).all()
             for os in otherStudents:
                 if os.studentID != sp.studentID:
                     os.status = 'rejected'
