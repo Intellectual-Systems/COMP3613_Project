@@ -868,8 +868,31 @@
 				"disableBodyPruning": true
 			},
 			"request": {
-				"method": "GET",
-				"header": []
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"username\":\"tim\",\n\t\"password\":\"timpass\",\n    \"type\":\"employer\"\n}"
+				},
+				"url": {
+					"raw": "{{host}}/api/signup",
+					"host": [
+						"{{host}}"
+					],
+					"path": [
+						"api",
+						"signup"
+					]
+				}
 			},
 			"response": []
 		}
