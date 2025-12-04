@@ -860,6 +860,18 @@
 				"description": "Lets an authed user create a todo"
 			},
 			"response": []
+		},
+		{
+			"name": "New Request",
+			"id": "42549608-fe4fdf86-e072-4db9-986a-d1672a3d502e",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": []
+			},
+			"response": []
 		}
 	]
 }
