@@ -161,6 +161,41 @@
 			"response": []
 		},
 		{
+			"name": "Bad Sign Up",
+			"id": "42549608-fe4fdf86-e072-4db9-986a-d1672a3d502e",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"username\":\"tim\",\n\t\"password\":\"timpass\",\n    \"type\":\"employer\"\n}"
+				},
+				"url": {
+					"raw": "{{host}}/api/signup",
+					"host": [
+						"{{host}}"
+					],
+					"path": [
+						"api",
+						"signup"
+					]
+				}
+			},
+			"response": []
+		},
+		{
 			"name": "Login Student",
 			"event": [
 				{
@@ -858,41 +893,6 @@
 					]
 				},
 				"description": "Lets an authed user create a todo"
-			},
-			"response": []
-		},
-		{
-			"name": "Bad Sign Up",
-			"id": "42549608-fe4fdf86-e072-4db9-986a-d1672a3d502e",
-			"protocolProfileBehavior": {
-				"disableBodyPruning": true
-			},
-			"request": {
-				"auth": {
-					"type": "noauth"
-				},
-				"method": "POST",
-				"header": [
-					{
-						"key": "Content-Type",
-						"value": "application/json",
-						"type": "text"
-					}
-				],
-				"body": {
-					"mode": "raw",
-					"raw": "{\n\t\"username\":\"tim\",\n\t\"password\":\"timpass\",\n    \"type\":\"employer\"\n}"
-				},
-				"url": {
-					"raw": "{{host}}/api/signup",
-					"host": [
-						"{{host}}"
-					],
-					"path": [
-						"api",
-						"signup"
-					]
-				}
 			},
 			"response": []
 		}
