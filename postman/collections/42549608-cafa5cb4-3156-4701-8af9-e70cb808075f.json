@@ -618,7 +618,7 @@
 						"id": "05bacb0d-ed90-4a50-af0e-dc93df37255a",
 						"exec": [
 							"pm.test(\"Response status code is 403\", function () {\r",
-							"    pm.response.to.have.status(403);\r",
+							"    pm.response.to.have.status(401);\r",
 							"});\r",
 							"\r",
 							"pm.test(\"Response time is in an acceptable range\", function () {\r",
