@@ -277,7 +277,7 @@
 			"response": []
 		},
 		{
-			"name": "Login Student",
+			"name": "Login Student - Success",
 			"event": [
 				{
 					"listen": "test",
