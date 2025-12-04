@@ -1200,7 +1200,7 @@
 			"response": []
 		},
 		{
-			"name": "New Request",
+			"name": "Permission Test",
 			"id": "42549608-7098d394-da35-4275-b7ef-fbd2bb96ef4a",
 			"protocolProfileBehavior": {
 				"disableBodyPruning": true
