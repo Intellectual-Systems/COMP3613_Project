@@ -215,7 +215,7 @@
 			"response": []
 		},
 		{
-			"name": "Bad Sign Up",
+			"name": "Sign Up - Failed",
 			"event": [
 				{
 					"listen": "test",
