@@ -615,41 +615,36 @@
 				{
 					"listen": "test",
 					"script": {
+						"id": "05bacb0d-ed90-4a50-af0e-dc93df37255a",
 						"exec": [
-							"pm.test(\"Response status code is 200\", function () {\r",
-							"    pm.response.to.have.status(200);\r",
+							"pm.test(\"Response status code is 403\", function () {\r",
+							"    pm.response.to.have.status(403);\r",
 							"});\r",
 							"\r",
 							"pm.test(\"Response time is in an acceptable range\", function () {\r",
 							"    pm.expect(pm.response.responseTime).to.be.below(500); // assuming an acceptable range is below 500ms\r",
 							"});\r",
 							"\r",
-							"pm.test('Response has the required fields', function () {\r",
-							"    const responseData = pm.response.json();\r",
-							"        pm.expect(responseData).to.have.property('id');\r",
-							"        pm.expect(responseData).to.have.property('student_id');\r",
-							"        pm.expect(responseData).to.have.property('title');\r",
-							"        pm.expect(responseData).to.have.property('position_id');\r",
-							"        pm.expect(responseData).to.have.property('staff_id');\r",
-							"        pm.expect(responseData).to.have.property('status');\r",
-							"})"
+							"pm.test(\"Student Failed to be Added\", function () {\r",
+							"    var jsonData = pm.response.json();\r",
+							"    pm.expect(jsonData.error).to.eql(\"Failed to add to shortlist\");\r",
+							"});"
 						],
 						"type": "text/javascript",
 						"packages": {},
-						"requests": {},
-						"id": "05bacb0d-ed90-4a50-af0e-dc93df37255a"
+						"requests": {}
 					}
 				},
 				{
 					"listen": "prerequest",
 					"script": {
+						"id": "6fa24599-5d43-4bb0-ad40-d73a16529780",
 						"exec": [
 							""
 						],
 						"type": "text/javascript",
 						"packages": {},
-						"requests": {},
-						"id": "6fa24599-5d43-4bb0-ad40-d73a16529780"
+						"requests": {}
 					}
 				}
 			],
