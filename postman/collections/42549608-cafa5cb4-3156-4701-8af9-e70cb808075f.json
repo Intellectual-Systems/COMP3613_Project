@@ -515,7 +515,7 @@
 			"response": []
 		},
 		{
-			"name": "Login Staff",
+			"name": "Login Staff - Success",
 			"event": [
 				{
 					"listen": "test",
@@ -742,7 +742,7 @@
 			"response": []
 		},
 		{
-			"name": "Login Employer",
+			"name": "Login Employer - Success",
 			"event": [
 				{
 					"listen": "test",
