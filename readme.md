@@ -4,30 +4,7 @@
 
 ## Recent Changes
 
-- Made ApplicationState soley an abstract Python class (as opposed to it being a table). This:
-    - Avoids the conflict from attempting to inherit from both db and ABC
-    - Simplifies the database. Tables for metadata such as an application's state do not need to exist as separate tables as the Application table, which already is a table, has a state attribute
-
-- Made some changes to requirements.txt:
-    - Removed the following duplicate requirements:
-        - click==8.1.3
-        - Flask==2.3.3
-        - Flask-Admin==1.6.1
-        - Flask-Cors==3.0.10
-        - Flask-JWT-Extended==4.4.4
-        - Flask-Migrate==3.1.0
-        - Flask-Reuploaded==1.2.0
-        - Flask-SQLAlchemy==3.1.1
-        - gevent==22.10.2
-        - gunicorn==20.1.0
-        - psycopg2-binary==2.9.9
-        - pytest==7.0.1
-        - python-dotenv==1.0.1
-        - rich==13.4.2
-        - Werkzeug>=3.0.0
-    - Changed gevent version to make it compatible with Python 3.12:
-        - gevent==22.10.2 -> gevent>=23.12.0
-
+- Updated models/application.py and models/applicationstate.py to use state pettern correctly
 
 ## Next Tasks
 
