@@ -4,27 +4,28 @@ from sqlalchemy.ext.hybrid import hybrid_property
 from datetime import date
 from App.models.application import Application
 
-class Shortlist(db.Model):
-    __tablename__ = 'shortlist'
-    studentID = db.Column(db.Integer, db.ForeignKey('student.id'), primary_key=True)
-    positionID = db.Column(db.Integer, db.ForeignKey('position.id'), primary_key=True)
-    status = db.Column(db.String(20), nullable=False, default='pending')
-    employer_response = db.Column(db.String(20), nullable=True, default=None)
 
-    def __init__(self, studentID, positionID):
-        self.studentID = studentID
-        self.positionID = positionID
+# class Shortlist(db.Model):
+#     __tablename__ = 'shortlist'
+#     studentID = db.Column(db.Integer, db.ForeignKey('student.id'), primary_key=True)
+#     positionID = db.Column(db.Integer, db.ForeignKey('position.id'), primary_key=True)
+#     status = db.Column(db.String(20), nullable=False, default='pending')
+#     employer_response = db.Column(db.String(20), nullable=True, default=None)
 
-    def get_json(self):
-        return {
-            'studentID': self.studentID,
-            'positionID': self.positionID,
-            'status': self.status,
-            'employer_response': self.employer_response
-        }
+#     def __init__(self, studentID, positionID):
+#         self.studentID = studentID
+#         self.positionID = positionID
 
-    def __repr__(self):
-        return f"Shortlist[studentID= {self.studentID} -> positionID= {self.positionID}, status= {self.status}, employer_response= {self.employer_response}]"
+#     def get_json(self):
+#         return {
+#             'studentID': self.studentID,
+#             'positionID': self.positionID,
+#             'status': self.status,
+#             'employer_response': self.employer_response
+#         }
+
+#     def __repr__(self):
+#         return f"Shortlist[studentID= {self.studentID} -> positionID= {self.positionID}, status= {self.status}, employer_response= {self.employer_response}]"
 
 
 class Student(User):

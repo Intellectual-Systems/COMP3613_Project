@@ -1,5 +1,6 @@
 from App.models.staff import Staff
-from App.models.student import Shortlist
+from App.models.shortlist import Shortlist
+# from App.models.student import Shortlist
 from App.models.position import Position
 from App.models.student import Student
 from App.database import db

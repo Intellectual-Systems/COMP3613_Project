@@ -60,7 +60,8 @@ from App.models.employer import Employer
 from App.models.staff import Staff
 from App.models.student import Student
 from App.models.position import Position
-from App.models.student import Shortlist
+# from App.models.student import Shortlist
+from App.models.shortlist import Shortlist
 
 from functools import wraps
 from flask_jwt_extended import get_jwt_identity

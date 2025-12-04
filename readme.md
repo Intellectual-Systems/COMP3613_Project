@@ -4,7 +4,7 @@
 
 ## Recent Changes
 
-- Added code to test permission system
+- Refacted Shortlist to exist in it's own file
 
 ## Next Tasks
 

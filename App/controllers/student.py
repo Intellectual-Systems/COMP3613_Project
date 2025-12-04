@@ -1,5 +1,6 @@
 from App.models.student import Student
-from App.models.student import Shortlist
+# from App.models.student import Shortlist
+from App.models.shortlist import Shortlist
 from App.database import db
 
 # def create_student(username, degree, gpa):#, password, faculty, department, degree, gpa):

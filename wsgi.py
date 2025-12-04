@@ -9,7 +9,8 @@ from App.controllers import get_all_users_json, initialize, get_all_positions, g
 from App.controllers.student import (get_all_students, create_student, get_student_by_id)
 
 
-from App.models.student import Student, Shortlist
+from App.models.student import Student#, Shortlist
+from App.models.shortlist import Shortlist
 from App.models.staff import Staff
 from App.models.position import Position
 # from App.models.position import Position
@@ -57,6 +58,48 @@ def print_error(message):
 def init():
     initialize()
     print('database intialized')
+
+# List command to list all tables in the database
+@app.cli.command("list", help="Lists all tables in the database")
+def list():
+    employers = get_all_employers()
+    staff = get_all_staff()
+    students = get_all_students()
+    positions = Position.query.all()
+    student_positions = Shortlist.query.all()
+    
+    print("")
+    
+    if employers:
+        for emp in employers:
+            print(emp)
+    
+    print("")
+    
+    if staff:
+        for sta in staff:
+            print(sta)
+    
+    print("")
+
+    if students:
+        for stu in students:
+            print(stu)
+    
+    print("")
+
+    if positions:
+        for pos in positions:
+            print(pos)
+    
+    print("")
+
+    if student_positions:
+        for ss in student_positions:
+            print(ss)
+    
+    print("")
+
 
 '''
 User Commands

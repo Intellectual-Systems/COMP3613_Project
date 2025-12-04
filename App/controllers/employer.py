@@ -1,6 +1,7 @@
 from App.models.employer import Employer
 from App.models.position import Position
-from App.models.student import Shortlist
+from App.models.shortlist import Shortlist
+# from App.models.student import Shortlist
 from App.database import db
 
 def create_employer(username, password, companyName):
