@@ -40,7 +40,7 @@
 							"\tconst {message} = pm.response.json();\r",
 							"\r",
 							"\tpm.test(\"Should return the message 'Database Initialized!'\", function () {\r",
-							"\t\t\tpm.expect(message).to.eql('Database Initialized!');\r",
+							"\t\t\tpm.expect(message).to.eql('db initialized!');\r",
 							"\t\t}\r",
 							"\t);\r",
 							"\r",
