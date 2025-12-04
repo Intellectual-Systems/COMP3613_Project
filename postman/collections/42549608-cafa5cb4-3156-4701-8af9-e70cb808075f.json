@@ -78,7 +78,7 @@
 			"response": []
 		},
 		{
-			"name": "Bad Login",
+			"name": "Login - Bad Credentials",
 			"event": [
 				{
 					"listen": "test",
