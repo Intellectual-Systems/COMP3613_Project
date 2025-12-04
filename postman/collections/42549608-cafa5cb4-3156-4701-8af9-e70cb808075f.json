@@ -1,0 +1,1191 @@
+{
+	"info": {
+		"_postman_id": "42549608-cafa5cb4-3156-4701-8af9-e70cb808075f",
+		"name": "Student ShortList API",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Root",
+			"id": "42549608-46920787-fa1e-4dab-a069-1057cc910a39",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{host}}",
+					"host": [
+						"{{host}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Initialize App",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "2516b48d-7d6d-4b1e-983c-05345c4c5586",
+						"exec": [
+							"pm.test(\"Content-Type header is application/json\", () => {\r",
+							"  pm.expect(pm.response.headers.get('Content-Type')).to.eql('application/json');\r",
+							"});\r",
+							"\r",
+							"if(pm.response.headers.get('Content-Type') == 'application/json'){\r",
+							"\r",
+							"\tconst {message} = pm.response.json();\r",
+							"\r",
+							"\tpm.test(\"Should return the message 'Database Initialized!'\", function () {\r",
+							"\t\t\tpm.expect(message).to.eql('db initialized!');\r",
+							"\t\t}\r",
+							"\t);\r",
+							"\r",
+							"\tpm.test(\"Should have the correct status code\", function () {\r",
+							"\t\t\r",
+							"\t\tpm.expect(pm.response.code).to.eql(200);\r",
+							"\t\t\r",
+							"\t});\r",
+							"\r",
+							"}"
+						],
+						"type": "text/javascript",
+						"packages": {},
+						"requests": {}
+					}
+				}
+			],
+			"id": "42549608-df942dd5-2aaf-4041-bd22-0c889cd08e71",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{host}}/init",
+					"host": [
+						"{{host}}"
+					],
+					"path": [
+						"init"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Login - Bad Credentials",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"\r",
+							"pm.test('Response status code is 200', function () {\r",
+							"    pm.expect(pm.response.code).to.equal(401);\r",
+							"})\r",
+							"\r",
+							"pm.test(\"Response time is in an acceptable range\", function () {\r",
+							"    pm.expect(pm.response.responseTime).to.be.below(500); // assuming an acceptable range is below 500ms\r",
+							"});\r",
+							"\r",
+							"let responseJson = pm.response.json();\r",
+							"\r",
+							"pm.test(\"Signup failed due to username taken\", function () {\r",
+							"    pm.expect(responseJson.message).to.eql(\"bad username or password given\");\r",
+							"});\r",
+							""
+						],
+						"type": "text/javascript",
+						"packages": {},
+						"requests": {},
+						"id": "ec74f18e-ddbb-4956-ac58-03322031af98"
+					}
+				}
+			],
+			"id": "42549608-88452962-ba00-45be-aa2a-1d6b2ec094e7",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n\t\"username\":\"name\",\r\n\t\"password\":\"nowork\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{host}}/api/login",
+					"host": [
+						"{{host}}"
+					],
+					"path": [
+						"api",
+						"login"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Sign Up - Success",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test('Response status code is 200', function () {\r",
+							"    pm.expect(pm.response.code).to.equal(200);\r",
+							"})\r",
+							"\r",
+							"pm.test('Response has the required field - access_token', function () {\r",
+							"    const responseData = pm.response.json();\r",
+							"    pm.environment.set('access_token', responseData.access_token);\r",
+							"    pm.expect(responseData.access_token).to.exist;\r",
+							"})\r",
+							"\r",
+							"pm.test('Access token is a non-empty string', function () {\r",
+							"    const responseData = pm.response.json();\r",
+							"    pm.expect(responseData.access_token).to.be.a('string').and.to.have.lengthOf.at.least(1, 'Value should not be empty');\r",
+							"})\r",
+							"\r",
+							"pm.test(\"Response time is in an acceptable range\", function () {\r",
+							"    pm.expect(pm.response.responseTime).to.be.below(500); // assuming an acceptable range is below 500ms\r",
+							"});"
+						],
+						"type": "text/javascript",
+						"packages": {},
+						"requests": {},
+						"id": "29c78585-2cee-464f-8c21-99b0e275687a"
+					}
+				}
+			],
+			"id": "42549608-6716ed43-d852-4daa-8ef8-4460199f9451",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"username\":\"tim\",\n\t\"password\":\"timpass\",\n    \"type\":\"employer\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{host}}/api/signup",
+					"host": [
+						"{{host}}"
+					],
+					"path": [
+						"api",
+						"signup"
+					]
+				},
+				"description": "Signs up a user"
+			},
+			"response": []
+		},
+		{
+			"name": "Sign Up - Failed",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "823e8280-59d8-4ba5-92ab-028fb8266c49",
+						"exec": [
+							"pm.test('Response status code is 401', function () {\r",
+							"    pm.expect(pm.response.code).to.equal(401);\r",
+							"})\r",
+							"\r",
+							"pm.test(\"Response time is in an acceptable range\", function () {\r",
+							"    pm.expect(pm.response.responseTime).to.be.below(500);\r",
+							"});\r",
+							"\r",
+							"let responseJson = pm.response.json();\r",
+							"\r",
+							"pm.test(\"Signup failed due to username taken\", function () {\r",
+							"    pm.expect(responseJson.message).to.eql(\"Signup failed, username taken!\");\r",
+							"});\r",
+							""
+						],
+						"type": "text/javascript",
+						"packages": {},
+						"requests": {}
+					}
+				}
+			],
+			"id": "42549608-fe4fdf86-e072-4db9-986a-d1672a3d502e",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"username\":\"tim\",\n\t\"password\":\"timpass\",\n    \"type\":\"employer\"\n}"
+				},
+				"url": {
+					"raw": "{{host}}/api/signup",
+					"host": [
+						"{{host}}"
+					],
+					"path": [
+						"api",
+						"signup"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Login Student - Success",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"\r",
+							"pm.test('Response status code is 200', function () {\r",
+							"    pm.expect(pm.response.code).to.equal(200);\r",
+							"})\r",
+							"\r",
+							"pm.test('Response has the required field - access_token', function () {\r",
+							"    const responseData = pm.response.json();\r",
+							"    pm.environment.set('access_token', responseData.access_token);\r",
+							"    pm.expect(responseData.access_token).to.exist;\r",
+							"})\r",
+							"\r",
+							"pm.test('Access token is a non-empty string', function () {\r",
+							"    const responseData = pm.response.json();\r",
+							"    pm.expect(responseData.access_token).to.be.a('string').and.to.have.lengthOf.at.least(1, 'Value should not be empty');\r",
+							"})\r",
+							"\r",
+							"pm.test(\"Response time is in an acceptable range\", function () {\r",
+							"    pm.expect(pm.response.responseTime).to.be.below(500);\r",
+							"});"
+						],
+						"type": "text/javascript",
+						"packages": {},
+						"requests": {},
+						"id": "55900b4d-269f-4fa9-923b-f2543b39cb74"
+					}
+				},
+				{
+					"listen": "prerequest",
+					"script": {
+						"exec": [
+							""
+						],
+						"type": "text/javascript",
+						"packages": {},
+						"requests": {},
+						"id": "754a0edd-ed5f-4f86-a543-c220dcec3d9a"
+					}
+				}
+			],
+			"id": "42549608-6bf71edb-128c-47f1-b6d1-feea867448b4",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n\t\"username\":\"bob\",\r\n\t\"password\":\"bobpass\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{host}}/api/login",
+					"host": [
+						"{{host}}"
+					],
+					"path": [
+						"api",
+						"login"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "(Student) View Shortlist for Student",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Response status code is 200\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});",
+							"",
+							"pm.test(\"Response time is in an acceptable range\", function () {",
+							"    pm.expect(pm.response.responseTime).to.be.below(500); // assuming an acceptable range is below 500ms",
+							"});",
+							"",
+							"pm.test('Response has the required fields', function () {",
+							"    const responseData = pm.response.json();",
+							"    pm.expect(responseData).to.be.an('array');",
+							"    responseData.forEach(function (shortlist) {",
+							"        pm.expect(shortlist).to.have.property('id');",
+							"        pm.expect(shortlist).to.have.property('title');",
+							"        pm.expect(shortlist).to.have.property('student_id');",
+							"        pm.expect(shortlist).to.have.property('position_id');",
+							"        pm.expect(shortlist).to.have.property('staff_id');",
+							"        pm.expect(shortlist).to.have.property('status');",
+							"    });",
+							"})",
+							""
+						],
+						"type": "text/javascript",
+						"packages": {},
+						"requests": {},
+						"id": "88e2c58b-af75-4d14-afa5-67d587637a3f"
+					}
+				},
+				{
+					"listen": "prerequest",
+					"script": {
+						"exec": [
+							""
+						],
+						"type": "text/javascript",
+						"packages": {},
+						"requests": {},
+						"id": "355c6573-24a0-43b8-a241-8af674b27bae"
+					}
+				}
+			],
+			"id": "42549608-f5a20a0d-e918-46a5-9a0c-84097b5a8d82",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "GET",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{host}}/api/shortlist/student/1",
+					"host": [
+						"{{host}}"
+					],
+					"path": [
+						"api",
+						"shortlist",
+						"student",
+						"1"
+					]
+				},
+				"description": "Lets an authed user create a todo"
+			},
+			"response": []
+		},
+		{
+			"name": "(!Employer) Bad Show Positions from Employer",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Response status code is 403\", function () {",
+							"    pm.response.to.have.status(403);",
+							"});",
+							"",
+							"pm.test(\"Response time is in an acceptable range\", function () {",
+							"    pm.expect(pm.response.responseTime).to.be.below(500); // assuming an acceptable range is below 500ms",
+							"});",
+							"",
+							"pm.test(\"Unauthorized user\", function () {",
+							"    var jsonData = pm.response.json();",
+							"    pm.expect(jsonData.message).to.eql(\"Unauthorized user\");",
+							"});",
+							""
+						],
+						"type": "text/javascript",
+						"packages": {},
+						"requests": {},
+						"id": "9b57b2e8-deb8-4f93-89d7-a7f3964e64e2"
+					}
+				}
+			],
+			"id": "42549608-20294c04-2dbf-4732-bd26-67e1807f2468",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "GET",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{host}}/api/employer/positions",
+					"host": [
+						"{{host}}"
+					],
+					"path": [
+						"api",
+						"employer",
+						"positions"
+					]
+				},
+				"description": "Lets an authed user create a todo"
+			},
+			"response": []
+		},
+		{
+			"name": "Login Staff - Success",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "a45cdc7f-ab3d-409e-85b3-9ef3ecb8b3dd",
+						"exec": [
+							"pm.test('Response status code is 200', function () {\r",
+							"    pm.expect(pm.response.code).to.equal(200);\r",
+							"})\r",
+							"\r",
+							"pm.test('Response has the required field - access_token', function () {\r",
+							"    const responseData = pm.response.json();\r",
+							"    pm.environment.set('access_token', responseData.access_token);\r",
+							"    pm.expect(responseData.access_token).to.exist;\r",
+							"})\r",
+							"\r",
+							"pm.test('Access token is a non-empty string', function () {\r",
+							"    const responseData = pm.response.json();\r",
+							"    pm.expect(responseData.access_token).to.be.a('string').and.to.have.lengthOf.at.least(1, 'Value should not be empty');\r",
+							"})\r",
+							"\r",
+							"pm.test(\"Response time is in an acceptable range\", function () {\r",
+							"    pm.expect(pm.response.responseTime).to.be.below(500);\r",
+							"});"
+						],
+						"type": "text/javascript",
+						"packages": {},
+						"requests": {}
+					}
+				}
+			],
+			"id": "42549608-572a85b5-fdd1-4e96-bbfd-04a5f8db1cb8",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n\t\"username\": \"john\",\r\n\t\"password\": \"johnpass\"\r\n}"
+				},
+				"url": {
+					"raw": "{{host}}/api/login",
+					"host": [
+						"{{host}}"
+					],
+					"path": [
+						"api",
+						"login"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "(Staff) Add Student to Shortlist",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Response status code is 200\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Response time is in an acceptable range\", function () {\r",
+							"    pm.expect(pm.response.responseTime).to.be.below(500); // assuming an acceptable range is below 500ms\r",
+							"});\r",
+							"\r",
+							"pm.test('Response has the required fields', function () {\r",
+							"    const responseData = pm.response.json();\r",
+							"        pm.expect(responseData).to.have.property('id');\r",
+							"        pm.expect(responseData).to.have.property('student_id');\r",
+							"        pm.expect(responseData).to.have.property('title');\r",
+							"        pm.expect(responseData).to.have.property('position_id');\r",
+							"        pm.expect(responseData).to.have.property('staff_id');\r",
+							"        pm.expect(responseData).to.have.property('status');\r",
+							"})"
+						],
+						"type": "text/javascript",
+						"packages": {},
+						"requests": {},
+						"id": "05bacb0d-ed90-4a50-af0e-dc93df37255a"
+					}
+				},
+				{
+					"listen": "prerequest",
+					"script": {
+						"exec": [
+							""
+						],
+						"type": "text/javascript",
+						"packages": {},
+						"requests": {},
+						"id": "6fa24599-5d43-4bb0-ad40-d73a16529780"
+					}
+				}
+			],
+			"id": "42549608-44a825cc-4230-4101-aa4d-82a96e726925",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"student_id\": \"1\",\n    \"position_id\": \"2\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{host}}/api/shortlist",
+					"host": [
+						"{{host}}"
+					],
+					"path": [
+						"api",
+						"shortlist"
+					]
+				},
+				"description": "Lets an authed user create a todo"
+			},
+			"response": []
+		},
+		{
+			"name": "(Staff) Bad Add Student to Shortlist",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "05bacb0d-ed90-4a50-af0e-dc93df37255a",
+						"exec": [
+							"pm.test(\"Response status code is 403\", function () {\r",
+							"    pm.response.to.have.status(401);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Response time is in an acceptable range\", function () {\r",
+							"    pm.expect(pm.response.responseTime).to.be.below(500); // assuming an acceptable range is below 500ms\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Student Failed to be Added\", function () {\r",
+							"    var jsonData = pm.response.json();\r",
+							"    pm.expect(jsonData.error).to.eql(\"Failed to add to shortlist\");\r",
+							"});"
+						],
+						"type": "text/javascript",
+						"packages": {},
+						"requests": {}
+					}
+				},
+				{
+					"listen": "prerequest",
+					"script": {
+						"id": "6fa24599-5d43-4bb0-ad40-d73a16529780",
+						"exec": [
+							""
+						],
+						"type": "text/javascript",
+						"packages": {},
+						"requests": {}
+					}
+				}
+			],
+			"id": "42549608-49348d43-e8e9-42eb-9fb7-6df2b9091146",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"student_id\": \"1\",\n    \"position_id\": \"2\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{host}}/api/shortlist",
+					"host": [
+						"{{host}}"
+					],
+					"path": [
+						"api",
+						"shortlist"
+					]
+				},
+				"description": "Lets an authed user create a todo"
+			},
+			"response": []
+		},
+		{
+			"name": "Login Employer - Success",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "72861432-11c2-415b-81d8-2574922d90bb",
+						"exec": [
+							"pm.test('Response status code is 200', function () {\r",
+							"    pm.expect(pm.response.code).to.equal(200);\r",
+							"})\r",
+							"\r",
+							"pm.test('Response has the required field - access_token', function () {\r",
+							"    const responseData = pm.response.json();\r",
+							"    pm.environment.set('access_token', responseData.access_token);\r",
+							"    pm.expect(responseData.access_token).to.exist;\r",
+							"})\r",
+							"\r",
+							"pm.test('Access token is a non-empty string', function () {\r",
+							"    const responseData = pm.response.json();\r",
+							"    pm.expect(responseData.access_token).to.be.a('string').and.to.have.lengthOf.at.least(1, 'Value should not be empty');\r",
+							"})\r",
+							"\r",
+							"pm.test(\"Response time is in an acceptable range\", function () {\r",
+							"    pm.expect(pm.response.responseTime).to.be.below(500);\r",
+							"});"
+						],
+						"type": "text/javascript",
+						"packages": {},
+						"requests": {}
+					}
+				}
+			],
+			"id": "42549608-ea7c410a-4e58-4d2c-a855-7ff42c35f468",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n\t\"username\": \"frank\",\r\n\t\"password\": \"frankpass\"\r\n}"
+				},
+				"url": {
+					"raw": "{{host}}/api/login",
+					"host": [
+						"{{host}}"
+					],
+					"path": [
+						"api",
+						"login"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "(Employer) Show all Positions",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Response status code is 200\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});",
+							"",
+							"pm.test(\"Response time is in an acceptable range\", function () {",
+							"    pm.expect(pm.response.responseTime).to.be.below(500); // assuming an acceptable range is below 500ms",
+							"});",
+							"",
+							"pm.test('Response has the required fields', function () {",
+							"    const responseData = pm.response.json();",
+							"    pm.expect(responseData).to.be.an('array');",
+							"    responseData.forEach(function (position) {",
+							"        pm.expect(position).to.have.property('id');",
+							"        pm.expect(position).to.have.property('title');",
+							"        pm.expect(position).to.have.property('number_of_positions');",
+							"        pm.expect(position).to.have.property('status');",
+							"        pm.expect(position).to.have.property('employer_id');",
+							"    });",
+							"})",
+							""
+						],
+						"type": "text/javascript",
+						"packages": {},
+						"requests": {},
+						"id": "5947e390-02c5-4b5d-b347-053e3a42d404"
+					}
+				},
+				{
+					"listen": "prerequest",
+					"script": {
+						"exec": [
+							""
+						],
+						"type": "text/javascript",
+						"packages": {},
+						"requests": {},
+						"id": "b4bc1407-713a-4639-8bdf-184ba4a91a3e"
+					}
+				}
+			],
+			"id": "42549608-1c034335-9024-464b-9dce-4ddcb17a3d73",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "GET",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"title\": \"Dentist\",\n    \"number\": \"3\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{host}}/api/positions/all",
+					"host": [
+						"{{host}}"
+					],
+					"path": [
+						"api",
+						"positions",
+						"all"
+					]
+				},
+				"description": "Lets an authed user create a todo"
+			},
+			"response": []
+		},
+		{
+			"name": "(Employer) Create Position",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Response status code is 201\", function () {",
+							"    pm.response.to.have.status(201);",
+							"});",
+							"",
+							"pm.test(\"Response time is in an acceptable range\", function () {",
+							"    pm.expect(pm.response.responseTime).to.be.below(500); // assuming an acceptable range is below 500ms",
+							"});",
+							"",
+							"pm.test('Response has the required fields', function () {",
+							"    const responseData = pm.response.json();",
+							"        pm.expect(responseData).to.have.property('employer_id');",
+							"        pm.expect(responseData).to.have.property('id');",
+							"        pm.expect(responseData).to.have.property('number_of_positions');",
+							"        pm.expect(responseData).to.have.property('title');",
+							"        pm.expect(responseData).to.have.property('status');",
+							"})"
+						],
+						"type": "text/javascript",
+						"packages": {},
+						"requests": {},
+						"id": "41b923a1-c9fe-4f7c-8431-a9ed03c43bfa"
+					}
+				}
+			],
+			"id": "42549608-b0f41ee4-3418-45fe-8d52-26d3fad6c797",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"title\": \"Dentist\",\n    \"number\": \"3\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{host}}/api/positions/create",
+					"host": [
+						"{{host}}"
+					],
+					"path": [
+						"api",
+						"positions",
+						"create"
+					]
+				},
+				"description": "Lets an authed user create a todo"
+			},
+			"response": []
+		},
+		{
+			"name": "(Employer) Show Positions from Employer",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Response status code is 200\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});",
+							"",
+							"pm.test(\"Response time is in an acceptable range\", function () {",
+							"    pm.expect(pm.response.responseTime).to.be.below(500); // assuming an acceptable range is below 500ms",
+							"});",
+							"",
+							"pm.test('Response has the required fields', function () {",
+							"    const responseData = pm.response.json();",
+							"    pm.expect(responseData).to.be.an('array');",
+							"    responseData.forEach(function (position) {",
+							"        pm.expect(position).to.have.property('id');",
+							"        pm.expect(position).to.have.property('title');",
+							"        pm.expect(position).to.have.property('number_of_positions');",
+							"        pm.expect(position).to.have.property('status');",
+							"        pm.expect(position).to.have.property('employer_id');",
+							"    });",
+							"})",
+							""
+						],
+						"type": "text/javascript",
+						"packages": {},
+						"requests": {},
+						"id": "a979a6be-54f9-4a3e-947d-b1233e4d8542"
+					}
+				}
+			],
+			"id": "42549608-eac22d08-ccb3-4e78-afad-baac19752b77",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "GET",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{host}}/api/employer/positions",
+					"host": [
+						"{{host}}"
+					],
+					"path": [
+						"api",
+						"employer",
+						"positions"
+					]
+				},
+				"description": "Lets an authed user create a todo"
+			},
+			"response": []
+		},
+		{
+			"name": "(Employer) Make Decision on Student",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Response status code is 200\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});",
+							"",
+							"pm.test(\"Response time is in an acceptable range\", function () {",
+							"    pm.expect(pm.response.responseTime).to.be.below(500); // assuming an acceptable range is below 500ms",
+							"});",
+							"",
+							"pm.test('Response has the required fields', function () {",
+							"    const shortlist = pm.response.json();",
+							"        pm.expect(shortlist).to.have.property('id');",
+							"        pm.expect(shortlist).to.have.property('position_id');",
+							"        pm.expect(shortlist).to.have.property('staff_id');",
+							"        pm.expect(shortlist).to.have.property('status');",
+							"        pm.expect(shortlist).to.have.property('student_id');",
+							"        pm.expect(shortlist).to.have.property('title');",
+							"})"
+						],
+						"type": "text/javascript",
+						"packages": {},
+						"requests": {},
+						"id": "540bef9b-7369-4b27-82de-d0f8b733d5f9"
+					}
+				}
+			],
+			"id": "42549608-9493994f-5d61-4cb9-aad3-96850cc499dd",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "PUT",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"student_id\": \"1\",\n    \"position_id\": \"1\",\n    \"decision\": \"accepted\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{host}}/api/shortlist",
+					"host": [
+						"{{host}}"
+					],
+					"path": [
+						"api",
+						"shortlist"
+					]
+				},
+				"description": "Lets an authed user create a todo"
+			},
+			"response": []
+		},
+		{
+			"name": "(Employer) Get Shortlist of Position",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Response status code is 200\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});",
+							"",
+							"pm.test(\"Response time is in an acceptable range\", function () {",
+							"    pm.expect(pm.response.responseTime).to.be.below(500); // assuming an acceptable range is below 500ms",
+							"});",
+							"",
+							"pm.test('Response has the required fields', function () {",
+							"    const responseData = pm.response.json();",
+							"    pm.expect(responseData).to.be.an('array');",
+							"    responseData.forEach(function (shortlist) {",
+							"        pm.expect(shortlist).to.have.property('id');",
+							"        pm.expect(shortlist).to.have.property('title');",
+							"        pm.expect(shortlist).to.have.property('student_id');",
+							"        pm.expect(shortlist).to.have.property('position_id');",
+							"        pm.expect(shortlist).to.have.property('staff_id');",
+							"        pm.expect(shortlist).to.have.property('status');",
+							"    });",
+							"})"
+						],
+						"type": "text/javascript",
+						"packages": {},
+						"requests": {},
+						"id": "6b11c2b8-1946-4bf1-b9e7-42c83ce56c5a"
+					}
+				}
+			],
+			"id": "42549608-9b11dec4-4deb-4aad-a697-025b071fbd67",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "GET",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{host}}/api/shortlist/position/1",
+					"host": [
+						"{{host}}"
+					],
+					"path": [
+						"api",
+						"shortlist",
+						"position",
+						"1"
+					]
+				},
+				"description": "Lets an authed user create a todo"
+			},
+			"response": []
+		}
+	]
+}

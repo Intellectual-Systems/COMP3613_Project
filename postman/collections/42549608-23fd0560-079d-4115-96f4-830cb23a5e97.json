@@ -1,0 +1,1402 @@
+{
+	"info": {
+		"_postman_id": "42549608-23fd0560-079d-4115-96f4-830cb23a5e97",
+		"name": "Intellectual-Systems Project",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Root",
+			"id": "42549608-5bb78dfa-d84c-4e86-9270-4ee12b769fe4",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{host}}",
+					"host": [
+						"{{host}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Initialize App",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "2516b48d-7d6d-4b1e-983c-05345c4c5586",
+						"exec": [
+							"pm.test(\"Content-Type header is application/json\", () => {\r",
+							"  pm.expect(pm.response.headers.get('Content-Type')).to.eql('application/json');\r",
+							"});\r",
+							"\r",
+							"if(pm.response.headers.get('Content-Type') == 'application/json'){\r",
+							"\r",
+							"\tconst {message} = pm.response.json();\r",
+							"\r",
+							"\tpm.test(\"Should return the message 'Database Initialized!'\", function () {\r",
+							"\t\t\tpm.expect(message).to.eql('Database Initialized!');\r",
+							"\t\t}\r",
+							"\t);\r",
+							"\r",
+							"\tpm.test(\"Should have the correct status code\", function () {\r",
+							"\t\t\r",
+							"\t\tpm.expect(pm.response.code).to.eql(200);\r",
+							"\t\t\r",
+							"\t});\r",
+							"\r",
+							"}"
+						],
+						"type": "text/javascript",
+						"packages": {},
+						"requests": {}
+					}
+				}
+			],
+			"id": "42549608-1d552df5-b864-467a-844a-4280c98863d7",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{host}}/init",
+					"host": [
+						"{{host}}"
+					],
+					"path": [
+						"init"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Sign Up - Success",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "1882e906-b393-4368-bb02-a26a69031eb9",
+						"exec": [
+							"let { username, password} = JSON.parse(pm.request.body.raw);",
+							"",
+							"pm.collectionVariables.set('username', username);",
+							"pm.collectionVariables.set('password', password);",
+							"",
+							"pm.test(",
+							"\t\"Should respond with <username> created message\", ",
+							"\tfunction () {",
+							"\t\tlet { message } = pm.response.json();",
+							"    \tpm.expect(message).to.eql(`${username} created`);",
+							"\t}",
+							");",
+							"",
+							"pm.test(",
+							"\t\"Should respond with the correct status\", ",
+							"\tfunction () {",
+							"\t\tpm.response.to.have.status(201);",
+							"\t}",
+							");",
+							"",
+							"",
+							"// let { error, message } = pm.response.json();",
+							"// \tpm.expect(error ?? message).to.be.oneOf([\"username or email already exists\", \"user created\"]);"
+						],
+						"type": "text/javascript",
+						"packages": {},
+						"requests": {}
+					}
+				},
+				{
+					"listen": "prerequest",
+					"script": {
+						"id": "368defa5-61ed-4fca-aafe-fbba0ca7d766",
+						"exec": [
+							""
+						],
+						"type": "text/javascript",
+						"packages": {},
+						"requests": {}
+					}
+				}
+			],
+			"id": "42549608-32bc7f91-157b-457e-9ba7-4b3bc7d00c0a",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"username\": \"{{$randomUserName}}\",\n\t\"password\": \"{{$randomPassword}}\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{host}}/api/users",
+					"host": [
+						"{{host}}"
+					],
+					"path": [
+						"api",
+						"users"
+					]
+				},
+				"description": "Allows the user to create a user account returns an appropriate message and status."
+			},
+			"response": [
+				{
+					"id": "42549608-ef5518cd-818d-4d75-b0f4-15703b79bf5d",
+					"name": "Sign Up - Success",
+					"originalRequest": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"username\": \"{{$randomUserName}}\",\n\t\"email\": \"{{$randomEmail}}\",\n\t\"password\": \"{{$randomPassword}}\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{host}}/signup",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"signup"
+							]
+						}
+					},
+					"status": "Created",
+					"code": 201,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "Access-Control-Allow-Origin",
+							"value": "*"
+						},
+						{
+							"key": "Content-Length",
+							"value": "44"
+						},
+						{
+							"key": "Content-Type",
+							"value": "application/json"
+						},
+						{
+							"key": "Date",
+							"value": "Sun, 03 Mar 2024 00:33:57 GMT"
+						},
+						{
+							"key": "Server",
+							"value": "Werkzeug/3.0.1 Python/3.8.16"
+						}
+					],
+					"cookie": [],
+					"responseTime": null,
+					"body": "{\n    \"message\": \"Jennings.Goodwin created\"\n}"
+				}
+			]
+		},
+		{
+			"name": "Login - Success",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "4dd6f25f-fb2a-435c-ba86-801dfb356ba4",
+						"exec": [
+							"pm.test(\"Returned Access Token\", function () {",
+							"    var jsonData = pm.response.json();",
+							"    pm.collectionVariables.set('access_token', jsonData['access_token']) ",
+							"});",
+							"",
+							"",
+							"   "
+						],
+						"type": "text/javascript",
+						"packages": {},
+						"requests": {}
+					}
+				},
+				{
+					"listen": "prerequest",
+					"script": {
+						"id": "42d33f6e-f97c-4214-ace3-a0291b1f827c",
+						"exec": [
+							""
+						],
+						"type": "text/javascript",
+						"packages": {},
+						"requests": {}
+					}
+				}
+			],
+			"id": "42549608-f300d858-e798-4527-add2-f32da6b9e899",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n\t\"username\": \"{{username}}\",\r\n\t\"password\": \"{{password}}\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{host}}/api/login",
+					"host": [
+						"{{host}}"
+					],
+					"path": [
+						"api",
+						"login"
+					]
+				},
+				"description": "Allows a user to login and recieve their token"
+			},
+			"response": [
+				{
+					"id": "42549608-d83c8411-7dec-448c-a183-652ff6180063",
+					"name": "Login - Success",
+					"originalRequest": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n\t\"username\": \"{{username}}\",\r\n\t\"password\": \"{{password}}\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{host}}/login",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"login"
+							]
+						}
+					},
+					"status": "OK",
+					"code": 200,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "Access-Control-Allow-Origin",
+							"value": "*"
+						},
+						{
+							"key": "Content-Length",
+							"value": "309"
+						},
+						{
+							"key": "Content-Type",
+							"value": "application/json"
+						},
+						{
+							"key": "Date",
+							"value": "Sun, 03 Mar 2024 00:39:18 GMT"
+						},
+						{
+							"key": "Server",
+							"value": "Werkzeug/3.0.1 Python/3.8.16"
+						}
+					],
+					"cookie": [],
+					"responseTime": null,
+					"body": "{\n    \"access_token\": \"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJmcmVzaCI6ZmFsc2UsImlhdCI6MTcwOTQyNjM1OCwianRpIjoiYzE4ODBjNjEtYjg4Ny00Mzk3LWE4YTQtNzk5M2U1MjU4MjdmIiwidHlwZSI6ImFjY2VzcyIsInN1YiI6Ikplbm5pbmdzLkdvb2R3aW4iLCJuYmYiOjE3MDk0MjYzNTgsImV4cCI6MTcwOTQ4MDM1OH0.I7MDJf8BRwuvzCX0O8rDEocJXsv7yHx3E8BNwUw8PYw\"\n}"
+				}
+			]
+		},
+		{
+			"name": "List Users",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "b3813f70-7234-4083-bec8-5d20fbd3a1c8",
+						"exec": [
+							"var schema = {\r",
+							"    \"type\": \"object\",\r",
+							"    \"properties\": {\r",
+							"        \"employers\": {\r",
+							"            \"type\": \"array\",\r",
+							"            \"items\" : {\r",
+							"                \"type\" : \"object\",\r",
+							"                \"properties\": {\r",
+							"                    \"companyName\": { \"type\": \"string\" },\r",
+							"                    \"id\": { \"type\": \"number\" },\r",
+							"                    \"username\": { \"type\": \"string\" }\r",
+							"                }\r",
+							"            }\r",
+							"        },\r",
+							"        \"staff\": {\r",
+							"            \"type\": \"array\",\r",
+							"            \"items\": {\r",
+							"                \"type\": \"object\",\r",
+							"                \"properties\": {\r",
+							"                    \"employerID\": { \"type\": \"number\" },\r",
+							"                    \"id\":{\"type\":\"number\"},\r",
+							"                    \"username\":{\"type\":\"string\"}\r",
+							"                }\r",
+							"               \r",
+							"            }\r",
+							"        },\r",
+							"        \"students\": {\r",
+							"            \"type\": \"array\",\r",
+							"            \"items\": {\r",
+							"                \"type\": \"object\",\r",
+							"                \"properties\": {\r",
+							"                    \"degree\": { \"type\": \"string\" },\r",
+							"                    \"department\": { \"type\": \"string\" },\r",
+							"                    \"faculty\": { \"type\": \"string\" },\r",
+							"                    \"gpa\": { \"type\": \"number\" },\r",
+							"                    \"id\":{\"type\":\"number\"},\r",
+							"                    \"username\":{\"type\":\"string\"}\r",
+							"                }\r",
+							"                \r",
+							"            }\r",
+							"        }\r",
+							"    },\r",
+							"    \"required\": [  ],\r",
+							"};\r",
+							"\r",
+							"\r",
+							"pm.test(\r",
+							"    `Users should have an employers, staff and students with the appropriate values`, \r",
+							"    function() {\r",
+							"        var jsonData = pm.response.json();\r",
+							"        pm.expect(tv4.validate(jsonData, schema)).to.be.true;\r",
+							"    }\r",
+							");"
+						],
+						"type": "text/javascript",
+						"packages": {},
+						"requests": {}
+					}
+				},
+				{
+					"listen": "prerequest",
+					"script": {
+						"id": "221b6bb6-6a38-4051-ba71-abe3bf0b4d89",
+						"exec": [
+							""
+						],
+						"type": "text/javascript",
+						"packages": {},
+						"requests": {}
+					}
+				}
+			],
+			"id": "42549608-427b4e1b-3c2d-4c80-91cf-c1a072a640ec",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{host}} /list",
+					"host": [
+						"{{host}} "
+					],
+					"path": [
+						"list"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Create Employer",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "a34e20e1-d61f-471c-be9e-12f47d7068d5",
+						"exec": [
+							"let { username, password, companyName} = JSON.parse(pm.request.body.raw);\r",
+							"\r",
+							"pm.collectionVariables.set('username', username);\r",
+							"pm.collectionVariables.set('password', password);\r",
+							"pm.collectionVariables.set('companyName', companyName);\r",
+							"\r",
+							"pm.test(\r",
+							"\t\"Should respond with <username> created message\", \r",
+							"\tfunction () {\r",
+							"\t\tlet { message } = pm.response.json();\r",
+							"    \tpm.expect(message).to.eql(`Employer ${username} created`);\r",
+							"\t}\r",
+							");\r",
+							"\r",
+							"pm.test(\r",
+							"\t\"Should respond with the correct status\", \r",
+							"\tfunction () {\r",
+							"\t\tpm.response.to.have.status(201);\r",
+							"\t}\r",
+							");"
+						],
+						"type": "text/javascript",
+						"packages": {},
+						"requests": {}
+					}
+				}
+			],
+			"id": "42549608-8fe1e93e-c759-44c2-9153-771335719907",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"username\" : \"dick\",\r\n    \"password\" : \"dickpass\",\r\n    \"companyName\" : \"DickCorp\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{host}}/create-emp",
+					"host": [
+						"{{host}}"
+					],
+					"path": [
+						"create-emp"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "List Employers",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "ce8dab7e-5b2e-4218-be5f-a75088e60a04",
+						"exec": [
+							"var schema = {\r",
+							"  \"type\": \"array\",\r",
+							"  \"items\": {\r",
+							"    \"type\": \"object\",\r",
+							"    \"properties\": {\r",
+							"        \"companyName\":{\"type\":\"string\"},\r",
+							"\t\t\"id\":{\"type\":\"number\"},\r",
+							"        \"username\":{\"type\":\"string\"}\r",
+							"    },\r",
+							"    \"required\": [ \"companyName\", \"id\", \"username\"]\r",
+							"  }\r",
+							"};\r",
+							"\r",
+							"\r",
+							"pm.test(\r",
+							"    `Employer should have an companyName, id and username with the appropriate values`, \r",
+							"    function() {\r",
+							"        var jsonData = pm.response.json();\r",
+							"        pm.expect(tv4.validate(jsonData, schema)).to.be.true;\r",
+							"    }\r",
+							");"
+						],
+						"type": "text/javascript",
+						"packages": {},
+						"requests": {}
+					}
+				}
+			],
+			"id": "42549608-4599a381-4002-4ae3-ab42-afff698c7745",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{host}}/list-emp",
+					"host": [
+						"{{host}}"
+					],
+					"path": [
+						"list-emp"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Create Position",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "db429e79-eb1c-4c3a-915f-44f473e39ef0",
+						"exec": [
+							"let { employerID, positionTitle, department, description} = JSON.parse(pm.request.body.raw);\r",
+							"\r",
+							"pm.collectionVariables.set(\"employerID\", employerID);\r",
+							"pm.collectionVariables.set(\"positionTitle\", positionTitle);\r",
+							"pm.collectionVariables.set(\"department\", department);\r",
+							"pm.collectionVariables.set(\"description\", description);\r",
+							"\r",
+							"pm.test(\r",
+							"\t\"Should respond with <positionTitle> created message\", \r",
+							"\tfunction () {\r",
+							"\t\tlet { message } = pm.response.json();\r",
+							"    \tpm.expect(message).to.eql(`Position ${positionTitle} created`);\r",
+							"\t}\r",
+							");\r",
+							"\r",
+							"pm.test(\r",
+							"\t\"Should respond with the correct status\", \r",
+							"\tfunction () {\r",
+							"\t\tpm.response.to.have.status(201);\r",
+							"\t}\r",
+							");"
+						],
+						"type": "text/javascript",
+						"packages": {},
+						"requests": {}
+					}
+				}
+			],
+			"id": "42549608-daca3da1-0914-4860-ba0a-a1094e772111",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"employerID\" : 13,\r\n    \"positionTitle\" : \"IT Intern\",\r\n    \"department\" : \"IT\",\r\n    \"description\" : \"Address technical issues\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{host}}/create-pos",
+					"host": [
+						"{{host}}"
+					],
+					"path": [
+						"create-pos"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "List Positions",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "dca410f4-df70-4a09-9e98-e005f2a6043a",
+						"exec": [
+							"var schema = {\r",
+							"  \"type\": \"array\",\r",
+							"  \"items\": {\r",
+							"    \"type\": \"object\",\r",
+							"    \"properties\": {\r",
+							"        \"department\": {\"type\":\"string\"},\r",
+							"        \"description\": { \"type\": \"string\" },\r",
+							"        \"employerID\": { \"type\": \"number\" }, \r",
+							"\t\t\"id\":{\"type\":\"number\"},\r",
+							"        \"positionTitle\":{\"type\":\"string\"},\r",
+							"        \"shortlist\": { \r",
+							"            \"type\": \"array\", \r",
+							"            \"items\": { \"type\": \"number\" }\r",
+							"        }\r",
+							"    },\r",
+							"      \"required\": [\"department\", \"description\", \"employerID\", \"id\", \"positionTitle\", \"shortlist\"]\r",
+							"  }\r",
+							"};\r",
+							"\r",
+							"\r",
+							"pm.test(\r",
+							"    `Positions should have a department, description, employerID, id, positionTitle and shortlist with the appropriate values`, \r",
+							"    function() {\r",
+							"        var jsonData = pm.response.json();\r",
+							"        pm.expect(tv4.validate(jsonData, schema)).to.be.true;\r",
+							"    }\r",
+							");\r",
+							""
+						],
+						"type": "text/javascript",
+						"packages": {},
+						"requests": {}
+					}
+				}
+			],
+			"id": "42549608-fb275107-e343-421d-938c-621dd3ac46b6",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{host}}/list-pos",
+					"host": [
+						"{{host}}"
+					],
+					"path": [
+						"list-pos"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Create Staff",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "94ff8151-da3c-417c-bc7a-a648e9c783b5",
+						"exec": [
+							"let { username, password, employerID} = JSON.parse(pm.request.body.raw);\r",
+							"\r",
+							"pm.collectionVariables.set(\"username\", username);\r",
+							"pm.collectionVariables.set(\"password\", password);\r",
+							"pm.collectionVariables.set(\"employerID\", employerID);\r",
+							"\r",
+							"pm.test(\r",
+							"\t\"Should respond with <username> created message\", \r",
+							"\tfunction () {\r",
+							"\t\tlet { message } = pm.response.json();\r",
+							"    \tpm.expect(message).to.eql(`Staff ${username} created`);\r",
+							"\t}\r",
+							");\r",
+							"\r",
+							"pm.test(\r",
+							"\t\"Should respond with the correct status\", \r",
+							"\tfunction () {\r",
+							"\t\tpm.response.to.have.status(201);\r",
+							"\t}\r",
+							");"
+						],
+						"type": "text/javascript",
+						"packages": {},
+						"requests": {}
+					}
+				}
+			],
+			"id": "42549608-433e5bab-a88d-42c1-aa27-00dcf8cb6e0e",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"username\" : \"duck\",\r\n    \"password\" : \"duckpass\",\r\n    \"employerID\" : 13\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{host}}/create-sta",
+					"host": [
+						"{{host}}"
+					],
+					"path": [
+						"create-sta"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "List Staff",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "2073599a-2f6f-43d8-af0c-8da4da8d3938",
+						"exec": [
+							"var schema = {\r",
+							"  \"type\": \"array\",\r",
+							"  \"items\": {\r",
+							"    \"type\": \"object\",\r",
+							"    \"properties\": {\r",
+							"        \"employerID\": { \"type\": \"number\" },\r",
+							"\t\t\"id\":{\"type\":\"number\"},\r",
+							"        \"username\":{\"type\":\"string\"}\r",
+							"    },\r",
+							"    \"required\": [ \"employerID\", \"id\", \"username\"]\r",
+							"  }\r",
+							"};\r",
+							"\r",
+							"\r",
+							"pm.test(\r",
+							"    `Staff should have an employerID, id and username with the appropriate values`, \r",
+							"    function() {\r",
+							"        var jsonData = pm.response.json();\r",
+							"        pm.expect(tv4.validate(jsonData, schema)).to.be.true;\r",
+							"    }\r",
+							");"
+						],
+						"type": "text/javascript",
+						"packages": {},
+						"requests": {}
+					}
+				}
+			],
+			"id": "42549608-4493e799-2625-40e6-800c-537589d8c757",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{host}}/list-sta",
+					"host": [
+						"{{host}}"
+					],
+					"path": [
+						"list-sta"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Create Students",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "1774eb93-f23a-4b24-bbd5-434b87f46d9e",
+						"exec": [
+							"let { username, password, faculty, department, degree, gpa} = JSON.parse(pm.request.body.raw);\r",
+							"\r",
+							"pm.collectionVariables.set(\"username\", username);\r",
+							"pm.collectionVariables.set(\"password\", password);\r",
+							"pm.collectionVariables.set(\"faculty\", faculty);\r",
+							"pm.collectionVariables.set(\"department\", department);\r",
+							"pm.collectionVariables.set(\"degree\", degree);\r",
+							"pm.collectionVariables.set(\"gpa\", gpa);\r",
+							"\r",
+							"pm.test(\r",
+							"\t\"Should respond with <username> created message\", \r",
+							"\tfunction () {\r",
+							"\t\tlet { message } = pm.response.json();\r",
+							"    \tpm.expect(message).to.eql(`Student ${username} created`);\r",
+							"\t}\r",
+							");\r",
+							"\r",
+							"pm.test(\r",
+							"\t\"Should respond with the correct status\", \r",
+							"\tfunction () {\r",
+							"\t\tpm.response.to.have.status(201);\r",
+							"\t}\r",
+							");"
+						],
+						"type": "text/javascript",
+						"packages": {},
+						"requests": {}
+					}
+				}
+			],
+			"id": "42549608-af364070-335f-40d4-be11-c1039385866c",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"username\" : \"jack\",\r\n    \"password\" : \"jackpass\",\r\n    \"faculty\" : \"FST\",\r\n    \"department\" : \"DCIT\",\r\n    \"degree\" : \"BSc. Computer Science Major\",\r\n    \"gpa\" : 3.9\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{host}}/create-std",
+					"host": [
+						"{{host}}"
+					],
+					"path": [
+						"create-std"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "List Students",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "d02aa937-9309-42e7-8f42-dd510e0bc314",
+						"exec": [
+							"var schema = {\r",
+							"  \"type\": \"array\",\r",
+							"  \"items\": {\r",
+							"    \"type\": \"object\",\r",
+							"    \"properties\": {\r",
+							"        \"degree\": { \"type\": \"string\" },\r",
+							"        \"department\": { \"type\": \"string\" },\r",
+							"        \"faculty\": { \"type\": \"string\" },\r",
+							"        \"gpa\": { \"type\": \"number\" },\r",
+							"        \"id\": { \"type\": \"number\" },\r",
+							"        \"username\": { \"type\": \"string\" }\r",
+							"    },\r",
+							"      \"required\": [\"degree\", \"department\", \"faculty\", \"gpa\", \"id\", \"username\"],\r",
+							"  }\r",
+							"};\r",
+							"\r",
+							"\r",
+							"pm.test(\r",
+							"    `Student should have a degree, department, faculty, gpa, ID and username with the appropriate values`, \r",
+							"    function() {\r",
+							"        var jsonData = pm.response.json();\r",
+							"        pm.expect(tv4.validate(jsonData, schema)).to.be.true;\r",
+							"    }\r",
+							");"
+						],
+						"type": "text/javascript",
+						"packages": {},
+						"requests": {}
+					}
+				}
+			],
+			"id": "42549608-97d2fd18-7e9e-4e31-9106-875dff31bd47",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{host}}/list-std",
+					"host": [
+						"{{host}}"
+					],
+					"path": [
+						"list-std"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "(Staff) Enroll Student",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "ca830136-b025-43b8-b7ef-91e1089bc890",
+						"exec": [
+							"let { staffID, studentID, positionID} = JSON.parse(pm.request.body.raw);\r",
+							"\r",
+							"pm.collectionVariables.set(\"staffID\", staffID);\r",
+							"pm.collectionVariables.set(\"studentID\", studentID);\r",
+							"pm.collectionVariables.set(\"positionID\", positionID);\r",
+							"\r",
+							"\r",
+							"pm.test(\r",
+							"\t\"Should respond with student <studentID> shorlisted for position <positionID> by staff <staffID> created message\", \r",
+							"\tfunction () {\r",
+							"\t\tlet { message } = pm.response.json();\r",
+							"    \tpm.expect(message).to.eql(`Student ${studentID} shortlisted for position ${positionID} by staff ${staffID} successfully`);\r",
+							"\t}\r",
+							");\r",
+							"\r",
+							"pm.test(\r",
+							"\t\"Should respond with the correct status\", \r",
+							"\tfunction () {\r",
+							"\t\tpm.response.to.have.status(201);\r",
+							"\t}\r",
+							");"
+						],
+						"type": "text/javascript",
+						"packages": {},
+						"requests": {}
+					}
+				}
+			],
+			"id": "42549608-bbebfadc-ed71-4869-9106-d3b5fed46b6d",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"staffID\" : 14,\r\n    \"studentID\" : 15,\r\n    \"positionID\" : 4\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{host}}/enroll",
+					"host": [
+						"{{host}}"
+					],
+					"path": [
+						"enroll"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "(Staff) List Shortlists",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "511e762f-4db6-49c5-ba95-d8cd8ff91cdd",
+						"exec": [
+							"var schema = {\r",
+							"  \"type\": \"array\",\r",
+							"  \"items\": {\r",
+							"    \"type\": \"object\",\r",
+							"    \"properties\": {\r",
+							"        \"employer_response\": { \"type\": \"string\" },\r",
+							"        \"positionID\": { \"type\": \"number\" },\r",
+							"        \"status\": { \"type\": \"string\" },\r",
+							"        \"studentID\": { \"type\": \"number\" }\r",
+							"    },\r",
+							"      \"required\": [\"employer_response\", \"positionID\", \"status\", \"studentID\"]\r",
+							"  }\r",
+							"};\r",
+							"\r",
+							"\r",
+							"pm.test(\r",
+							"    `Staff should have employer_response, positionID, status and studentID with the appropriate values`, \r",
+							"    function() {\r",
+							"        var jsonData = pm.response.json();\r",
+							"        pm.expect(tv4.validate(jsonData, schema)).to.be.true;\r",
+							"    }\r",
+							");"
+						],
+						"type": "text/javascript",
+						"packages": {},
+						"requests": {}
+					}
+				}
+			],
+			"id": "42549608-273a0506-ff9d-4fd7-939d-72d122ad4059",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{host}}/list-sho",
+					"host": [
+						"{{host}}"
+					],
+					"path": [
+						"list-sho"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "(Employer) View Employer Positions",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "ab808f20-4ee3-4d2f-af86-4e1bf750c14a",
+						"exec": [
+							"var schema = {\r",
+							"  \"type\": \"array\",\r",
+							"  \"items\": {\r",
+							"    \"type\": \"object\",\r",
+							"    \"properties\": {\r",
+							"        \"department\": {\"type\":\"string\"},\r",
+							"        \"description\": { \"type\": \"string\" },\r",
+							"        \"employerID\": { \"type\": \"number\" }, \r",
+							"\t\t\"id\":{\"type\":\"number\"},\r",
+							"        \"positionTitle\":{\"type\":\"string\"},\r",
+							"        \"shortlist\": { \r",
+							"            \"type\": \"array\", \r",
+							"            \"items\": { \"type\": \"number\" }\r",
+							"        }\r",
+							"    },\r",
+							"      \"required\": [\"department\", \"description\", \"employerID\", \"id\", \"positionTitle\", \"shortlist\"]\r",
+							"  }\r",
+							"};\r",
+							"\r",
+							"\r",
+							"pm.test(\r",
+							"    `Employer positions should have a department, description, employerID, id, positionTitle and shortlist with the appropriate values`, \r",
+							"    function() {\r",
+							"        var jsonData = pm.response.json();\r",
+							"        pm.expect(tv4.validate(jsonData, schema)).to.be.true;\r",
+							"    }\r",
+							");"
+						],
+						"type": "text/javascript",
+						"packages": {},
+						"requests": {}
+					}
+				}
+			],
+			"id": "42549608-65e0e088-5f18-43dd-806b-c52b9c23e5e2",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{host}}/view-emp-pos/1",
+					"host": [
+						"{{host}}"
+					],
+					"path": [
+						"view-emp-pos",
+						"1"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "(Employer) View Position Shortlist",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "6eaaa203-2fb2-4872-9a37-b970191d64a2",
+						"exec": [
+							"var schema = {\r",
+							"  \"type\": \"array\",\r",
+							"  \"items\": {\r",
+							"    \"type\": \"object\",\r",
+							"    \"properties\": {\r",
+							"        \"employer_response\" : {\"type\": \"string\"},\r",
+							"        \"positionID\" : {\"type\": \"integer\"},\r",
+							"        \"status\" : {\"type\": \"string\"},\r",
+							"        \"studentID\" : {\"type\": \"integer\"}\r",
+							"    },\r",
+							"      \"required\": [\"employer_response\", \"positionID\", \"status\", \"studentID\"],\r",
+							"  }\r",
+							"};\r",
+							"\r",
+							"\r",
+							"pm.test(\r",
+							"    `Employer response for {positionID} by {studentID} is {employer_response}`, \r",
+							"    function() {\r",
+							"        var jsonData = pm.response.json();\r",
+							"        pm.expect(tv4.validate(jsonData, schema)).to.be.true;\r",
+							"    }\r",
+							");"
+						],
+						"type": "text/javascript",
+						"packages": {},
+						"requests": {}
+					}
+				}
+			],
+			"id": "42549608-e128e1ef-fa74-4de7-a52d-416eb7c19280",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{host}}/view-pos-sho/1",
+					"host": [
+						"{{host}}"
+					],
+					"path": [
+						"view-pos-sho",
+						"1"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "(Employer) Accept/Reject Student",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "40e5da07-55f8-40f3-9fb6-394f24c1c0ee",
+						"exec": [
+							"let { employerID, positionID, studentID, status, msg} = JSON.parse(pm.request.body.raw);\r",
+							"\r",
+							"pm.collectionVariables.set(\"employerID\", employerID);\r",
+							"pm.collectionVariables.set(\"positionID\", positionID);\r",
+							"pm.collectionVariables.set(\"studentID\", studentID);\r",
+							"pm.collectionVariables.set(\"status\", status);\r",
+							"pm.collectionVariables.set(\"message\", msg);\r",
+							"\r",
+							"\r",
+							"pm.test(\r",
+							"\t\"Should respond with student <studentID> has been <status> for position <positionID> by employer <employerID>\", \r",
+							"\tfunction () {\r",
+							"\t\tlet { message } = pm.response.json();\r",
+							"    \tpm.expect(message).to.eql(`Student ${studentID} has been ${status} for position ${positionID} by employer ${employerID}`);\r",
+							"\t}\r",
+							");\r",
+							"\r",
+							"pm.test(\r",
+							"\t\"Should respond with the correct status\", \r",
+							"\tfunction () {\r",
+							"\t\tpm.response.to.have.status(201);\r",
+							"\t}\r",
+							");"
+						],
+						"type": "text/javascript",
+						"packages": {},
+						"requests": {}
+					}
+				}
+			],
+			"id": "42549608-0a969245-0790-49b2-8803-62d3d53d3b9b",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"employerID\": \"1\",\r\n    \"positionID\": \"1\",\r\n    \"studentID\": \"8\",\r\n    \"status\": \"accepted\",\r\n    \"msg\": \"Congrats\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{host}}/accept-reject",
+					"host": [
+						"{{host}}"
+					],
+					"path": [
+						"accept-reject"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "(Student) View Student Shortlists",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "a473726b-2bcf-4a5f-a5d1-d32e7a47971c",
+						"exec": [
+							"var schema = {\r",
+							"  \"type\": \"array\",\r",
+							"  \"items\": {\r",
+							"    \"type\": \"object\",\r",
+							"    \"properties\": {\r",
+							"        \"employer_response\": { \"type\": \"string\" },\r",
+							"        \"positionID\": { \"type\": \"integer\" },\r",
+							"        \"status\": { \"type\": \"string\" },\r",
+							"        \"studentID\": { \"type\": \"integer\" }\r",
+							"    },\r",
+							"      \"required\": [\"employer_response\", \"positionID\", \"status\", \"studentID\"],\r",
+							"  }\r",
+							"};\r",
+							"\r",
+							"\r",
+							"pm.test(\r",
+							"    `Student {{studentID}} has correct application data`, \r",
+							"    function() {\r",
+							"        var jsonData = pm.response.json();\r",
+							"        pm.expect(tv4.validate(jsonData, schema)).to.be.true;\r",
+							"    }\r",
+							");"
+						],
+						"type": "text/javascript",
+						"packages": {},
+						"requests": {}
+					}
+				}
+			],
+			"id": "42549608-1bf45292-d81d-4522-a337-f270119a8816",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{host}}/view-std-sho/{{studentID}}",
+					"host": [
+						"{{host}}"
+					],
+					"path": [
+						"view-std-sho",
+						"{{studentID}}"
+					]
+				}
+			},
+			"response": []
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"id": "48db86cf-725c-4833-ba81-3a5741002827",
+				"type": "text/javascript",
+				"packages": {},
+				"requests": {},
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"id": "0e1d788e-b76e-4bc1-ae18-9af796681505",
+				"type": "text/javascript",
+				"packages": {},
+				"requests": {},
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"key": "access_token",
+			"value": ""
+		},
+		{
+			"key": "username",
+			"value": ""
+		},
+		{
+			"key": "password",
+			"value": ""
+		},
+		{
+			"key": "companyName",
+			"value": ""
+		},
+		{
+			"key": "employerID",
+			"value": ""
+		},
+		{
+			"key": "positionTitle",
+			"value": ""
+		},
+		{
+			"key": "department",
+			"value": ""
+		},
+		{
+			"key": "description",
+			"value": ""
+		},
+		{
+			"key": "faculty",
+			"value": ""
+		},
+		{
+			"key": "degree",
+			"value": ""
+		},
+		{
+			"key": "gpa",
+			"value": ""
+		},
+		{
+			"key": "staffID",
+			"value": ""
+		},
+		{
+			"key": "studentID",
+			"value": ""
+		},
+		{
+			"key": "positionID",
+			"value": ""
+		},
+		{
+			"key": "status",
+			"value": ""
+		},
+		{
+			"key": "message",
+			"value": ""
+		}
+	]
+}
