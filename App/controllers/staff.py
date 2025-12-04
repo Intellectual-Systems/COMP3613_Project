@@ -1,6 +1,6 @@
 from App.models.staff import Staff
 from App.models.student import Student_Position
-from App.models.position import InternshipPosition
+from App.models.position import Position
 from App.models.student import Student
 from App.database import db
 
@@ -26,7 +26,7 @@ def addToShortlist(staffID, positionID, studentID):
         staff = Staff.query.filter_by(id=staffID).first()
         if not staff:
             return False
-        position = InternshipPosition.query.filter_by(id=positionID).first()
+        position = Position.query.filter_by(id=positionID).first()
         student = Student.query.filter_by(id=studentID).first()
 
         if position != None and student != None:

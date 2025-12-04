@@ -5,13 +5,13 @@ from App.database import db, get_migrate
 from App.models import User
 from App.main import create_app
 # from App.controllers import ( create_user, get_all_users_json, get_all_users, initialize, open_position, add_student_to_shortlist, decide_shortlist, get_shortlist_by_student, get_shortlist_by_position, get_positions_by_employer)
-from App.controllers import get_all_users_json, initialize, get_all_positions, get_position_by_id, get_all_staff, get_all_employers, create_employer, get_employer_by_id, create_position, view_positions, view_position_shortlist, acceptReject
+from App.controllers import get_all_users_json, initialize, get_all_positions, get_position_by_id, get_all_staff, get_all_employers, create_employer, get_employer_by_id, create_position, view_positions, view_position_shortlist, acceptReject, create_staff, get_staff_by_id, addToShortlist
 from App.controllers.student import (get_all_students, create_student, get_student_by_id)
 
 
 from App.models.student import Student, Student_Position
 from App.models.staff import Staff
-from App.models.position import InternshipPosition
+from App.models.position import Position
 # from App.models.position import Position
 from App.models.employer import Employer
 
@@ -257,7 +257,7 @@ def view_position_shortlist_command():
         return
 
     print("\nPositions:\n")
-    positions = InternshipPosition.query.filter_by(employerID=empID).all()
+    positions = Position.query.filter_by(employerID=empID).all()
     for pos in positions:
         print(f'Position ID: {pos.id} Title: {pos.positionTitle}')
     
@@ -292,8 +292,12 @@ def create_employer_command():
 
 @employer_cli.command("create-position", help="Create a new internship position")
 def create_position_command():
-    print("\nEmployers:\n")
     employers = get_all_employers()
+    if not employers:
+        print('No employers found. Cannot create position.')
+        return
+
+    print("\nEmployers:\n")
     print("")
     for emp in employers:
         print(f'ID: {emp.id} | Name: {emp.username} | Company: {emp.companyName}')
@@ -308,7 +312,7 @@ def create_position_command():
     depart = input('\nEnter department: ')
     descr = input('\nEnter description: ')
 
-    p = InternshipPosition.query.filter_by(positionTitle=title, employerID=empID, department=depart, description=descr).first()
+    p = Position.query.filter_by(positionTitle=title, employerID=empID, department=depart, description=descr).first()
     if p:
         inp = ""
         print('This position already exists for this employer. Would you like to create a duplicate? (y/n): ')
@@ -346,7 +350,7 @@ def accept_reject_command():
     # Should close positions after a person is accepted, but for simplicity that will not be implemented
 
     print("\nPositions:\n")
-    positions = InternshipPosition.query.filter_by(employerID=empID).all()
+    positions = Position.query.filter_by(employerID=empID).all()
     for pos in positions:
         print(f'ID: {pos.id} Title: {pos.positionTitle}')
     
@@ -435,8 +439,11 @@ def create_staff_command():
 
 @staff_cli.command("add-to-shortlist", help="Add a student to a position's shortlist")
 def add_to_shortlist_command():
-    print("\nStaff:\n")
     staff = get_all_staff()
+    if not staff:
+        print('No staff found. Cannot add to shortlist.')
+        return
+    print("\nStaff:\n")
     print("")
     for sta in staff:
         print(f'ID: {sta.id} Name: {sta.username}')
@@ -449,7 +456,7 @@ def add_to_shortlist_command():
         return
 
     print("\nPositions:\n")
-    positions = InternshipPosition.query.filter_by(employerID=staff.employerID).all()
+    positions = Position.query.filter_by(employerID=staff.employerID).all()
     if not positions:
         print('No positions found for the employer associated with this staff member.')
         return
@@ -462,8 +469,13 @@ def add_to_shortlist_command():
         print('Position not found.')
         return
 
-    print("\nStudents:\n")
     students = get_all_students()
+
+    if not students:
+        print('No students found. Cannot add to shortlist.')
+        return
+
+    print("\nStudents:\n")
     for stu in students:
         print(f'ID: {stu.id} Name: {stu.username}')
     
@@ -478,7 +490,8 @@ def add_to_shortlist_command():
         print('Student is already in the shortlist for this position.')
         return
 
-    if staff.addToShortlist(position_id, student_id):
+    # if staff.addToShortlist(position_id, student_id):
+    if addToShortlist(staff_id, position_id, student_id):
         print(f'\nStudent {student.username} added to shortlist of position {position.positionTitle}.')
     else:
         print('\nFailed to add student to shortlist.')
@@ -497,7 +510,7 @@ def remove_from_shortlist_command():
         return
 
     print("\nPositions:\n")
-    positions = InternshipPosition.query.filter_by(employerID=staff_member.employerID).all()
+    positions = Position.query.filter_by(employerID=staff_member.employerID).all()
     if not positions:
         print('No positions found for this employer.')
         return
@@ -578,30 +591,33 @@ def create_student_command():
         db.session.commit()
         print(f'\nStudent {username} created!\n')
 
-# @student_cli.command("view-shortlists", help="View shortlists a specified student was added to")
-# def view_shortlists_command():
-#     print("\nStudents:\n")
-#     students = get_all_students()
-#     for stu in students:
-#         print(f'ID: {stu.id} Name: {stu.username}')
+@student_cli.command("view-shortlists", help="View shortlists a specified student was added to")
+def view_shortlists_command():
+    print("\nStudents:\n")
+    students = get_all_students()
+    for stu in students:
+        print(f'ID: {stu.id} Name: {stu.username}')
     
-#     student_id = input('\nEnter student ID: ')
-#     print("")
-#     student = get_student_by_id(student_id)
-#     if not student:
-#         print('Student not found.')
-#         return
+    student_id = input('\nEnter student ID: ')
+    print("")
+    student = get_student_by_id(student_id)
+    if not student:
+        print('Student not found.')
+        return
 
-#     student = Student_Position.query.filter_by(studentID=student_id).all()
-#     if student:
-#         for s in student:
-#             print(s)
-#     else:
-#         print('No shortlists found for this student.')
-#     print("")
+    student = Student_Position.query.filter_by(studentID=student_id).all()
+    if student:
+        for s in student:
+            print(s)
+    else:
+        print('No shortlists found for this student.')
+    print("")
 
 @student_cli.command("browse-positions", help="Browse available positions")
 def browse_positions_command():
+
+    # Should only show positions that are open and not shortlisted to yet
+
     positions = get_all_positions()
     if not positions:
         print("\nNo positions available.\n")

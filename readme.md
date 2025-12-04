@@ -4,23 +4,17 @@
 
 ## Recent Changes
 
-- Commented out most of the previous code for Shortlist, Staff, Employer, Position
+- Reviewed commands to ensure they work
 
-- Added controllers for Staff and Employer
+- Added some error handling in wsgi.py
 
-- Added commands for Staff, Employer and Position
-
-- Refactored Student model heavily:
-    - Removed unecessary attributes including userid, dob, gender, email, etc.
-    - Changed it to inherit from User instead of db.Model
-    - This provides several important talking point for the presentation:
-        - The original version of student had many attributes that were never initialised or had modifiers
-        - There was both an id and a user_id attribute which was redundant
-        - The original set up requires the user to be created first as the constructor for student required a user ID
-        - While the new set up does have it drawbacks, it is less redundant and avoids code that is never initialised
-
+- Refactored name for Position Model (InternshipPosition -> Position)
 
 ## Next Tasks
+
+- Refactor name for Student_Position to Shorlist
+
+-  Attempt to save Student_Position/Shortlist to separate file
 
 - Review commands for Employer and Position
 

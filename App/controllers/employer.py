@@ -1,5 +1,5 @@
 from App.models.employer import Employer
-from App.models.position import InternshipPosition
+from App.models.position import Position
 from App.models.student import Student_Position
 from App.database import db
 
@@ -22,7 +22,7 @@ def get_all_employers():
     return emps
 
 def view_positions(employerID):
-    positions = InternshipPosition.query.filter_by(id=employerID).all()
+    positions = Position.query.filter_by(id=employerID).all()
     if not positions:
         return None
     return positions
@@ -34,7 +34,7 @@ def view_position_shortlist(positionID):
     return shortlist
 
 def create_position(employerID, positionTitle, department, description):
-    pos = InternshipPosition(employerID=employerID, positionTitle=positionTitle, department=department, description=description)
+    pos = Position(employerID=employerID, positionTitle=positionTitle, department=department, description=description)
     db.session.add(pos)
     db.session.commit()
     return pos

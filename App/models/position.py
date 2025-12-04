@@ -2,9 +2,9 @@ from App.database import db
 from sqlalchemy import Enum
 import enum
 
-class InternshipPosition(db.Model):
+class Position(db.Model):
 
-    __tablename__ = 'internshipposition'
+    __tablename__ = 'position'
 
     id = db.Column(db.Integer, primary_key=True)
     employerID = db.Column(db.Integer, db.ForeignKey('employer.id'), nullable=False)
@@ -30,7 +30,7 @@ class InternshipPosition(db.Model):
         }
 
     def __repr__(self):
-        return f"InternshipPosition[id= {self.id}, employerID= {self.employerID}, positionTitle= {self.positionTitle}, department= {self.department}, description= {self.description}, shortlist= {[student.id for student in self.shortlist]}]"
+        return f"Position[id= {self.id}, employerID= {self.employerID}, positionTitle= {self.positionTitle}, department= {self.department}, description= {self.description}, shortlist= {[student.id for student in self.shortlist]}]"
 
 # class PositionStatus(enum.Enum):
 #     open = "open"
