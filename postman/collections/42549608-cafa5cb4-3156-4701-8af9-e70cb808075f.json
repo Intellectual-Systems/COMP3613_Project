@@ -24,6 +24,60 @@
 			"response": []
 		},
 		{
+			"name": "Initialize App Copy",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "2516b48d-7d6d-4b1e-983c-05345c4c5586",
+						"exec": [
+							"pm.test(\"Content-Type header is application/json\", () => {\r",
+							"  pm.expect(pm.response.headers.get('Content-Type')).to.eql('application/json');\r",
+							"});\r",
+							"\r",
+							"if(pm.response.headers.get('Content-Type') == 'application/json'){\r",
+							"\r",
+							"\tconst {message} = pm.response.json();\r",
+							"\r",
+							"\tpm.test(\"Should return the message 'Database Initialized!'\", function () {\r",
+							"\t\t\tpm.expect(message).to.eql('Database Initialized!');\r",
+							"\t\t}\r",
+							"\t);\r",
+							"\r",
+							"\tpm.test(\"Should have the correct status code\", function () {\r",
+							"\t\t\r",
+							"\t\tpm.expect(pm.response.code).to.eql(200);\r",
+							"\t\t\r",
+							"\t});\r",
+							"\r",
+							"}"
+						],
+						"type": "text/javascript",
+						"packages": {},
+						"requests": {}
+					}
+				}
+			],
+			"id": "42549608-df942dd5-2aaf-4041-bd22-0c889cd08e71",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{host}}/init",
+					"host": [
+						"{{host}}"
+					],
+					"path": [
+						"init"
+					]
+				}
+			},
+			"response": []
+		},
+		{
 			"name": "Bad Login",
 			"event": [
 				{
