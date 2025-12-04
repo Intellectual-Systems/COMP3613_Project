@@ -4,15 +4,31 @@
 
 ## Recent Changes
 
-- Updated models/application.py and models/applicationstate.py to use state pettern correctly
+- Refactored Student model heavily:
+    - Removed unecessary attributes including userid, dob, gender, email, etc.
+    - Changed it to inherit from User instead of db.Model
+    - This provides several important talking point for the presentation:
+        - The original version of student had many attributes that were never initialised or had modifiers
+        - There was both an id and a user_id attribute which was redundant
+        - The original set up requires the user to be created first as the constructor for student required a user ID
+        - While the new set up does have it drawbacks, it is less redundant and avoids code that is never initialised
+
 
 ## Next Tasks
+
+- Heavy refactoring of:
+    - Position
+    - Shortlist
+    - Staff
+    - Employer
+
+- Add views per user type
+
+- Add all necessary commands
 
 - Remove unecessary functions from user classes, such as:
     - Staff: add_to_shortlist
     - Student: create_application
-
-- Review commands and if necessary implement missing commands
 
 # Flask MVC Template
 A template for flask applications structured in the Model View Controller pattern [Demo](https://dcit-flaskmvc.herokuapp.com/). [Postman Collection](https://documenter.getpostman.com/view/583570/2s83zcTnEJ)

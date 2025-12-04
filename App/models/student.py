@@ -4,22 +4,58 @@ from sqlalchemy.ext.hybrid import hybrid_property
 from datetime import date
 from App.models.application import Application
 
-class Student(db.Model):
-    __tablename__ = 'student'
-    id = db.Column(db.Integer, primary_key=True)
-    user_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False, unique=True)
-    username =  db.Column(db.String(20), nullable=False, unique=True)
-    email = db.Column(db.String(256))
-    dob = db.Column(db.Date)
-    gender = db.Column(db.String(256))
-    degree = db.Column(db.String(256))
-    phone = db.Column(db.String(256))
-    gpa = db.Column(db.Float)
-    resume = db.Column(db.String(256))
+# class Student_Position(db.Model):
+#     __tablename__ = 'student_position'
+#     studentID = db.Column(db.Integer, db.ForeignKey('student.id'), primary_key=True)
+#     positionID = db.Column(db.Integer, db.ForeignKey('internshipposition.id'), primary_key=True)
+#     status = db.Column(db.String(20), nullable=False, default='pending')
+#     employer_response = db.Column(db.String(20), nullable=True, default=None)
 
-    def __init__(self, username, user_id):
+#     def __init__(self, studentID, positionID):
+#         self.studentID = studentID
+#         self.positionID = positionID
+
+#     def get_json(self):
+#         return {
+#             'studentID': self.studentID,
+#             'positionID': self.positionID,
+#             'status': self.status,
+#             'employer_response': self.employer_response
+#         }
+
+#     def __repr__(self):
+#         return f"Student_Position[studentID= {self.studentID} -> positionID= {self.positionID}, status= {self.status}, employer_response= {self.employer_response}]"
+
+
+class Student(User):
+
+    __tablename__ = 'student'
+
+    id = db.Column(db.Integer, db.ForeignKey('user.id'), primary_key=True)
+    degree = db.Column(db.String(20), nullable=False)
+    gpa = db.Column(db.Integer, nullable=False)
+    resume = db.Column(db.String(256))
+    shortlists = db.Column(db.String(256)) # temporary placeholder
+    # shortlists = db.relationship('InternshipPosition', secondary='student_position', back_populates='shortlist')
+
+    def __init__(self, username, password, degree, gpa, resume):
         self.username = username
-        self.user_id = user_id
+        self.set_password(password)
+        self.degree = degree
+        self.gpa = gpa
+        self.resume = resume
+
+    def get_json(self):
+        return {
+            'id': self.id,
+            'username': self.username,
+            'degree': self.degree,
+            'gpa': self.gpa,
+            'resume': self.resume
+        }
+
+    def __repr__(self):
+        return f"Student[id= {self.id}, username= {self.username}, degree= {self.degree}, gpa= {self.gpa}, resume= {self.resume}]"
 
     def create_application(self, position_id, application_state):
         application = Application(applicant_id=self.id, position_id=position_id, application_state=application_state)

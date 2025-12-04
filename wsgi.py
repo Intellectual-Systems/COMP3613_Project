@@ -5,8 +5,13 @@ from App.database import db, get_migrate
 from App.models import User
 from App.main import create_app
 from App.controllers import ( create_user, get_all_users_json, get_all_users, initialize, open_position, add_student_to_shortlist, decide_shortlist, get_shortlist_by_student, get_shortlist_by_position, get_positions_by_employer)
+from App.controllers.student import (get_all_students, create_student, get_student_by_id)
 
 
+from App.models.student import Student
+from App.models.staff import Staff
+from App.models.position import Position
+from App.models.employer import Employer
 
 # This commands file allow you to create convenient CLI commands for testing controllers
 
@@ -75,10 +80,10 @@ def create_user_command(username, password, user_type):
 @user_cli.command("list", help="Lists users in the database")
 @click.argument("format", default=DEFAULT_FORMAT)
 def list_user_command(format):
-    if format == 'string':
-        print(get_all_users())
-    else:
-        print(get_all_users_json())
+    # if format == 'string':
+    #     print(get_all_users())
+    # else:
+    print(get_all_users_json())
 
 @user_cli.command("add_position", help="Adds a position")
 @click.argument("title", default=DEFAULT_POSITION_TITLE)
@@ -180,3 +185,85 @@ def user_tests_command(type):
     
 
 app.cli.add_command(test)
+
+'''
+Student Commands
+'''
+
+student_cli = AppGroup('student', help='Student object commands')
+
+@student_cli.command("list", help="Lists all students in the database")
+def list_students_command():
+    students = get_all_students()
+
+    if not students:
+        print("\nNo students found.\n")
+        return
+
+    print("")
+    for stu in students:
+        print(stu)
+    print("")
+
+@student_cli.command("create", help="Creates a student")
+def create_student_command():
+    username = input('\nEnter student username: ')
+    password = input('\nEnter student password: ')
+    degree = input('\nEnter degree: ')
+    gpa = input('\nEnter GPA: ')
+    resume = input('\nEnter student resume (example: MyResume.pdf): ')
+
+    s = Student.query.filter_by(username=username, degree=degree, gpa=gpa, resume=resume).first()
+    # s = Student.query.filter_by(username=username, faculty=faculty, department=department, degree=degree, gpa=gpa).first()
+    if s:
+        print('\nThis student already exists.')
+        return
+    else:
+        stu = create_student(username, password, degree, gpa, resume)
+        # stu = create_student(username, password, faculty, department, degree, gpa)
+        db.session.add(stu)
+        db.session.commit()
+        print(f'\nStudent {username} created!\n')
+
+# @student_cli.command("view-shortlists", help="View shortlists a specified student was added to")
+# def view_shortlists_command():
+#     print("\nStudents:\n")
+#     students = get_all_students()
+#     for stu in students:
+#         print(f'ID: {stu.id} Name: {stu.username}')
+    
+#     student_id = input('\nEnter student ID: ')
+#     print("")
+#     student = get_student_by_id(student_id)
+#     if not student:
+#         print('Student not found.')
+#         return
+
+#     student = Student_Position.query.filter_by(studentID=student_id).all()
+#     if student:
+#         for s in student:
+#             print(s)
+#     else:
+#         print('No shortlists found for this student.')
+#     print("")
+
+# @student_cli.command("browse-positions", help="Browse available positions")
+# def browse_positions_command():
+#     positions = get_all_positions()
+#     if not positions:
+#         print("\nNo positions available.\n")
+#         return
+    
+#     print("\n=== Available Positions ===\n")
+#     for pos in positions:
+#         employer = get_employer_by_id(pos.employerID)
+#         print(f"ID: {pos.id} | {pos.positionTitle}")
+#         print(f"  Company: {employer.companyName if employer else 'Unknown'}")
+#         print(f"  Department: {pos.department}")
+#         print(f"  Description: {pos.description}")
+        
+#         # Show number of applicants
+#         shortlist = view_position_shortlist(pos.id)
+#         print(f"  Applicants: {len(shortlist) if shortlist else 0}")
+#         print("")
+app.cli.add_command(student_cli)
