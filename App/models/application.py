@@ -1,7 +1,7 @@
 from App.database import db
 # from App.models.position import Position
 from App.models.position import Position
-from App.models.applicationstate import ApplicationState
+from App.models.applicationstate import ApplicationState, STATE_MAP
 
 class Application(db.Model):
     __tablename__ = 'application'
@@ -14,6 +14,9 @@ class Application(db.Model):
         self.student_id = student_id
         self.position_id = position_id
         self.application_state = 'Applied'
+    
+    def __repr__(self):
+        return f"Application[id= {self.id}, student_id= {self.student_id}, position_id= {self.position_id}, application_state= {self.application_state}]"
     
     def get_state(self):
         state_class = STATE_MAP.get(self.application_state)
