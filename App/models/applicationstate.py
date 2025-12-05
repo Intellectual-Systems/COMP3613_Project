@@ -51,7 +51,7 @@ class ShortlistedState(ApplicationState):
 class AcceptedState(ApplicationState):
 
     def __init__(self):
-        super().__init__('Accepted', description)
+        super().__init__('Accepted', description= None)
 
     def shortlist(self, application):
         raise Exception("Applicant has already been accepted for a position.")
@@ -65,7 +65,7 @@ class AcceptedState(ApplicationState):
 class RejectedState(ApplicationState):
 
     def __init__(self):
-        super().__init__('Rejected', description)
+        super().__init__('Rejected', description = None)
 
     def shortlist(self, application):
         raise Exception("Applicant has already been rejected for this position.")
