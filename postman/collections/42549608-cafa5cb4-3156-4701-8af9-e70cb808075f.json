@@ -680,7 +680,7 @@
 			"response": []
 		},
 		{
-			"name": "List Staff Copy",
+			"name": "List Staff",
 			"event": [
 				{
 					"listen": "test",
