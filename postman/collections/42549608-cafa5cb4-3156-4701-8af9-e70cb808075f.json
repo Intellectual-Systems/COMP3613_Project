@@ -1167,6 +1167,7 @@
 				{
 					"listen": "test",
 					"script": {
+						"id": "41b923a1-c9fe-4f7c-8431-a9ed03c43bfa",
 						"exec": [
 							"pm.test(\"Response status code is 201\", function () {",
 							"    pm.response.to.have.status(201);",
@@ -1187,8 +1188,7 @@
 						],
 						"type": "text/javascript",
 						"packages": {},
-						"requests": {},
-						"id": "41b923a1-c9fe-4f7c-8431-a9ed03c43bfa"
+						"requests": {}
 					}
 				}
 			],
@@ -1210,7 +1210,7 @@
 				],
 				"body": {
 					"mode": "raw",
-					"raw": "{\n\t\"title\": \"Dentist\",\n    \"number\": \"3\"\n}",
+					"raw": "{\n\t\"title\": \"Dentist\",\n    \"department\": \"Health\",\n    \"description\": \"Dental Health\"\n}",
 					"options": {
 						"raw": {
 							"language": "json"
