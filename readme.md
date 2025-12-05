@@ -4,9 +4,7 @@
 
 ## Recent Changes
 
-- Added the state transitions for applications
-
-- Added error handling
+- Fixed controllers/application.py create_application
 
 ## Next Tasks
 
