@@ -381,6 +381,7 @@
 				{
 					"listen": "test",
 					"script": {
+						"id": "55900b4d-269f-4fa9-923b-f2543b39cb74",
 						"exec": [
 							"\r",
 							"pm.test('Response status code is 200', function () {\r",
@@ -404,20 +405,19 @@
 						],
 						"type": "text/javascript",
 						"packages": {},
-						"requests": {},
-						"id": "55900b4d-269f-4fa9-923b-f2543b39cb74"
+						"requests": {}
 					}
 				},
 				{
 					"listen": "prerequest",
 					"script": {
+						"id": "754a0edd-ed5f-4f86-a543-c220dcec3d9a",
 						"exec": [
 							""
 						],
 						"type": "text/javascript",
 						"packages": {},
-						"requests": {},
-						"id": "754a0edd-ed5f-4f86-a543-c220dcec3d9a"
+						"requests": {}
 					}
 				}
 			],
