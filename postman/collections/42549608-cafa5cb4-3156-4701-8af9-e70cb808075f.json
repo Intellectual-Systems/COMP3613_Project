@@ -277,87 +277,6 @@
 			"response": []
 		},
 		{
-			"name": "Login Student - Success",
-			"event": [
-				{
-					"listen": "test",
-					"script": {
-						"exec": [
-							"\r",
-							"pm.test('Response status code is 200', function () {\r",
-							"    pm.expect(pm.response.code).to.equal(200);\r",
-							"})\r",
-							"\r",
-							"pm.test('Response has the required field - access_token', function () {\r",
-							"    const responseData = pm.response.json();\r",
-							"    pm.environment.set('access_token', responseData.access_token);\r",
-							"    pm.expect(responseData.access_token).to.exist;\r",
-							"})\r",
-							"\r",
-							"pm.test('Access token is a non-empty string', function () {\r",
-							"    const responseData = pm.response.json();\r",
-							"    pm.expect(responseData.access_token).to.be.a('string').and.to.have.lengthOf.at.least(1, 'Value should not be empty');\r",
-							"})\r",
-							"\r",
-							"pm.test(\"Response time is in an acceptable range\", function () {\r",
-							"    pm.expect(pm.response.responseTime).to.be.below(500);\r",
-							"});"
-						],
-						"type": "text/javascript",
-						"packages": {},
-						"requests": {},
-						"id": "55900b4d-269f-4fa9-923b-f2543b39cb74"
-					}
-				},
-				{
-					"listen": "prerequest",
-					"script": {
-						"exec": [
-							""
-						],
-						"type": "text/javascript",
-						"packages": {},
-						"requests": {},
-						"id": "754a0edd-ed5f-4f86-a543-c220dcec3d9a"
-					}
-				}
-			],
-			"id": "42549608-6bf71edb-128c-47f1-b6d1-feea867448b4",
-			"protocolProfileBehavior": {
-				"disableBodyPruning": true
-			},
-			"request": {
-				"method": "POST",
-				"header": [
-					{
-						"key": "Content-Type",
-						"value": "application/json",
-						"type": "text"
-					}
-				],
-				"body": {
-					"mode": "raw",
-					"raw": "{\r\n\t\"username\":\"bob\",\r\n\t\"password\":\"bobpass\"\r\n}",
-					"options": {
-						"raw": {
-							"language": "json"
-						}
-					}
-				},
-				"url": {
-					"raw": "{{host}}/api/login",
-					"host": [
-						"{{host}}"
-					],
-					"path": [
-						"api",
-						"login"
-					]
-				}
-			},
-			"response": []
-		},
-		{
 			"name": "List Users",
 			"event": [
 				{
@@ -451,6 +370,87 @@
 					],
 					"path": [
 						"list"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Login Student - Success",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"\r",
+							"pm.test('Response status code is 200', function () {\r",
+							"    pm.expect(pm.response.code).to.equal(200);\r",
+							"})\r",
+							"\r",
+							"pm.test('Response has the required field - access_token', function () {\r",
+							"    const responseData = pm.response.json();\r",
+							"    pm.environment.set('access_token', responseData.access_token);\r",
+							"    pm.expect(responseData.access_token).to.exist;\r",
+							"})\r",
+							"\r",
+							"pm.test('Access token is a non-empty string', function () {\r",
+							"    const responseData = pm.response.json();\r",
+							"    pm.expect(responseData.access_token).to.be.a('string').and.to.have.lengthOf.at.least(1, 'Value should not be empty');\r",
+							"})\r",
+							"\r",
+							"pm.test(\"Response time is in an acceptable range\", function () {\r",
+							"    pm.expect(pm.response.responseTime).to.be.below(500);\r",
+							"});"
+						],
+						"type": "text/javascript",
+						"packages": {},
+						"requests": {},
+						"id": "55900b4d-269f-4fa9-923b-f2543b39cb74"
+					}
+				},
+				{
+					"listen": "prerequest",
+					"script": {
+						"exec": [
+							""
+						],
+						"type": "text/javascript",
+						"packages": {},
+						"requests": {},
+						"id": "754a0edd-ed5f-4f86-a543-c220dcec3d9a"
+					}
+				}
+			],
+			"id": "42549608-6bf71edb-128c-47f1-b6d1-feea867448b4",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n\t\"username\":\"bob\",\r\n\t\"password\":\"bobpass\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{host}}/api/login",
+					"host": [
+						"{{host}}"
+					],
+					"path": [
+						"api",
+						"login"
 					]
 				}
 			},
