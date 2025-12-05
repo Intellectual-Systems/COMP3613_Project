@@ -582,7 +582,7 @@
 				"auth": {
 					"type": "noauth"
 				},
-				"method": "GET",
+				"method": "POST",
 				"header": [
 					{
 						"key": "Content-Type",
@@ -592,18 +592,17 @@
 				],
 				"body": {
 					"mode": "raw",
-					"raw": "{\n\t\"title\": \"Dentist\",\n    \"number\": \"3\"\n}"
+					"raw": "{\n\t\"position_id\": \"2\"\n}"
 				},
 				"url": {
-					"raw": "{{host}}/api/positions/apply/2",
+					"raw": "{{host}}/api/positions/apply",
 					"host": [
 						"{{host}}"
 					],
 					"path": [
 						"api",
 						"positions",
-						"apply",
-						"2"
+						"apply"
 					]
 				}
 			},
