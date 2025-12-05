@@ -4,7 +4,9 @@
 
 ## Recent Changes
 
-- Refacted Shortlist to exist in it's own file
+- Added the state transitions for applications
+
+- Added error handling
 
 ## Next Tasks
 
