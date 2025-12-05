@@ -22,8 +22,8 @@ class ApplicationState(ABC):
 
 class AppliedState(ApplicationState):
 
-    def __init__(self, description=None):
-        super().__init__('Applied', description)
+    def __init__(self):
+        super().__init__('Applied')
 
     def shortlist(self, application):
         application.state = "Shortlisted"
@@ -32,14 +32,14 @@ class AppliedState(ApplicationState):
         raise Exception("Applicant must be shortlisted before acceptance.")
     
     def employer_reject(self, application):
-        raise Exception("Applicant must be shortlisted before rejection.")
+        application.state = "Rejected"
 
 class ShortlistedState(ApplicationState):
 
-    def __init__(self, description=None):
+    def __init__(self):
         super().__init__('Shortlisted')
 
-    def shortlist(self, application):
+    def shortlist(self):
         raise Exception("Application is already shortlisted for a position.")
     
     def employer_accept(self, application):
@@ -50,7 +50,7 @@ class ShortlistedState(ApplicationState):
 
 class AcceptedState(ApplicationState):
 
-    def __init__(self, description=None):
+    def __init__(self):
         super().__init__('Accepted', description)
 
     def shortlist(self, application):
@@ -64,7 +64,7 @@ class AcceptedState(ApplicationState):
 
 class RejectedState(ApplicationState):
 
-    def __init__(self, description=None):
+    def __init__(self):
         super().__init__('Rejected', description)
 
     def shortlist(self, application):
