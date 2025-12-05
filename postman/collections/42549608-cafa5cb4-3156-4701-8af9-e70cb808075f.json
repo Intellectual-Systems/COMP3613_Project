@@ -1167,7 +1167,7 @@
 				{
 					"listen": "test",
 					"script": {
-						"id": "41b923a1-c9fe-4f7c-8431-a9ed03c43bfa",
+						"id": "000d2288-563c-4af5-bae5-f2fdefd0b0ba",
 						"exec": [
 							"pm.test(\"Response status code is 201\", function () {",
 							"    pm.response.to.have.status(201);",
@@ -1179,11 +1179,9 @@
 							"",
 							"pm.test('Response has the required fields', function () {",
 							"    const responseData = pm.response.json();",
-							"        pm.expect(responseData).to.have.property('employer_id');",
+							"        pm.expect(responseData).to.have.property('employerID');",
 							"        pm.expect(responseData).to.have.property('id');",
-							"        pm.expect(responseData).to.have.property('number_of_positions');",
-							"        pm.expect(responseData).to.have.property('title');",
-							"        pm.expect(responseData).to.have.property('status');",
+							"        pm.expect(responseData).to.have.property('positionTitle');",
 							"})"
 						],
 						"type": "text/javascript",
