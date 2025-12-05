@@ -15,9 +15,3 @@ def initialize():
     create_position(employerID=2, positionTitle='Web Developer', department='IT', description='Develop and maintain websites.')
     create_application(student_id=1, position_id=1)
     addToShortlist(staffID=3, positionID=1, studentID=1)
-    # open_position(user_id=2, title='Software Engineer', number_of_positions= 6)
-    # open_position(user_id=2, title='Mechanical Engineer', number_of_positions= 6)
-    # add_student_to_shortlist(student_id=1, position_id=1, staff_id=3)
-
-# def wipe():
-#     db.drop_all()

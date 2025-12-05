@@ -1,13 +1,6 @@
 from App.models.student import Student
-# from App.models.student import Shortlist
 from App.models.shortlist import Shortlist
 from App.database import db
-
-# def create_student(username, degree, gpa):#, password, faculty, department, degree, gpa):
-#     stu = Student(username, degree, gpa)#, password, faculty, department, degree, gpa)
-#     db.session.add(stu)
-#     db.session.commit()
-#     return stu
 
 def create_student(username, password, degree, gpa, resume):
     stu = Student(username, password, degree, gpa, resume)

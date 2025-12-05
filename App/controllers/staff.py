@@ -53,8 +53,6 @@ def addToShortlist(staffID, positionID, studentID):
         return False
     print("Student found. Appending to shortlist...")
 
-    # if position != None and student != None:
-
     # Add the student to the position's shortlist
 
     found = Shortlist.query.filter_by(positionID=positionID, studentID=studentID).first()

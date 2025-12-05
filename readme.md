@@ -4,29 +4,7 @@
 
 ## Recent Changes
 
-- Added the state transitions for applications
-
-- Added error handling
-
-## Next Tasks
-
-- Solve issue with requesting from postman
-
--  Attempt to save Student_Position/Shortlist to separate file
-
-- Review commands for Employer and Position
-
-- Add all necessary commands
-
-- Review old code and merge functionality if necessary
-
-- Review Models
-
-- Add views per user type
-
-- Remove unecessary functions from user classes, such as:
-    - Staff: add_to_shortlist
-    - Student: create_application
+- Removed all unecessary comments and test code
 
 # Flask MVC Template
 A template for flask applications structured in the Model View Controller pattern [Demo](https://dcit-flaskmvc.herokuapp.com/). [Postman Collection](https://documenter.getpostman.com/view/583570/2s83zcTnEJ)
