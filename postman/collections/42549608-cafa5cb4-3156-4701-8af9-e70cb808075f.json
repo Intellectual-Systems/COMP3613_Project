@@ -817,9 +817,8 @@
 							"    const responseData = pm.response.json();\r",
 							"    pm.expect(responseData).to.be.an('array');\r",
 							"    responseData.forEach(function (shortlist) {\r",
-							"        pm.expect(shortlist).to.have.property('studentID');\r",
-							"        pm.expect(shortlist).to.have.property('positionID');\r",
-							"        pm.expect(shortlist).to.have.property('status');\r",
+							"        pm.expect(shortlist).to.have.property('id');\r",
+							"        pm.expect(shortlist).to.have.property('username');\r",
 							"    });\r",
 							"})"
 						],
