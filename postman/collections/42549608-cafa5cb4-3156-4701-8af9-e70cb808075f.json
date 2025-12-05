@@ -1084,6 +1084,7 @@
 				{
 					"listen": "test",
 					"script": {
+						"id": "5947e390-02c5-4b5d-b347-053e3a42d404",
 						"exec": [
 							"pm.test(\"Response status code is 200\", function () {",
 							"    pm.response.to.have.status(200);",
@@ -1108,20 +1109,19 @@
 						],
 						"type": "text/javascript",
 						"packages": {},
-						"requests": {},
-						"id": "5947e390-02c5-4b5d-b347-053e3a42d404"
+						"requests": {}
 					}
 				},
 				{
 					"listen": "prerequest",
 					"script": {
+						"id": "b4bc1407-713a-4639-8bdf-184ba4a91a3e",
 						"exec": [
 							""
 						],
 						"type": "text/javascript",
 						"packages": {},
-						"requests": {},
-						"id": "b4bc1407-713a-4639-8bdf-184ba4a91a3e"
+						"requests": {}
 					}
 				}
 			],
@@ -1151,14 +1151,12 @@
 					}
 				},
 				"url": {
-					"raw": "{{host}}/api/positions/all",
+					"raw": "{{host}}/list-pos",
 					"host": [
 						"{{host}}"
 					],
 					"path": [
-						"api",
-						"positions",
-						"all"
+						"list-pos"
 					]
 				},
 				"description": "Lets an authed user create a todo"
