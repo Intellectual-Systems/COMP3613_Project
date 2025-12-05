@@ -4,15 +4,18 @@ from App.database import db
 def get_application(student_id, position_id):
     return db.session.query(Application).filter_by(student_id=student_id, position_id=position_id).first()
 
-def create_application(position_id, student_id, status):
+def create_application(position_id, student_id):
     try:
         # Check if Application already exists
-        existing_app = get_application(position_id, student_id)
+        existing_app = get_application(student_id, position_id)
         if existing_app:
+            print("Application already exists.")
             return False
         
+        print("Creating new application with following data...")
+        print(f"Student ID: {student_id}, Position ID: {position_id}")
+        newApp = Application(student_id=student_id, position_id=position_id)
 
-        newApp = Application(student_id, position_id=position_id, status=status)
         db.session.add(newApp)
         db.session.commit()
 
