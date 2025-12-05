@@ -544,6 +544,18 @@
 			"response": []
 		},
 		{
+			"name": "New Request",
+			"id": "42549608-6a3ca81e-6fd9-46d7-80d2-1a93eaa969c6",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": []
+			},
+			"response": []
+		},
+		{
 			"name": "(!Employer) Bad Show Positions from Employer",
 			"event": [
 				{
