@@ -7,12 +7,14 @@ from App.main import create_app
 # from App.controllers import ( create_user, get_all_users_json, get_all_users, initialize, open_position, add_student_to_shortlist, decide_shortlist, get_shortlist_by_student, get_shortlist_by_position, get_positions_by_employer)
 from App.controllers import get_all_users_json, initialize, get_all_positions, get_position_by_id, get_all_staff, get_all_employers, create_employer, get_employer_by_id, create_position, view_positions, view_position_shortlist, acceptReject, create_staff, get_staff_by_id, addToShortlist
 from App.controllers.student import (get_all_students, create_student, get_student_by_id)
-
+from App.controllers.application import create_application
+from App.controllers.employer import create_template
 
 from App.models.student import Student#, Shortlist
 from App.models.shortlist import Shortlist
 from App.models.staff import Staff
 from App.models.position import Position
+from App.models.application import Application 
 # from App.models.position import Position
 from App.models.employer import Employer
 
@@ -67,6 +69,7 @@ def list():
     students = get_all_students()
     positions = Position.query.all()
     student_positions = Shortlist.query.all()
+    applications = Application.query.all()
     
     print("")
     
@@ -99,6 +102,10 @@ def list():
             print(ss)
     
     print("")
+
+    if applications:
+        for app in applications:
+            print(app)
 
 
 '''
@@ -330,7 +337,7 @@ def create_employer_command():
     password = input('\nEnter employer password: ')
     companyName = input('\nEnter company name: ')
 
-    e = Employer.query.filter_by(username=username, companyName=companyName).first()
+    e = Employer.query.filter_by(username=username, password=password, companyName=companyName).first()
     if e:
         print('\nThis employer already exists.')
         return
@@ -375,6 +382,10 @@ def create_position_command():
 
     position = create_position(empID, title, depart, descr)
     print(f'\n"{position.positionTitle}" position created for employer {emp.username}.\n')
+
+@employer_cli.command("create-template", help="Create a template employer, position, staff, student, application, and shortlist")
+def create_template_command():
+    create_template()
 
 @employer_cli.command("accept-reject", help="Accept or reject a student application")
 def accept_reject_command():
@@ -429,7 +440,8 @@ def accept_reject_command():
     if message.strip() == '':
         message = None
 
-    if emp.acceptReject(student_id, position_id, status, message):
+    # if emp.acceptReject(student_id, position_id, status, message):
+    if acceptReject(empID, student_id, position_id, status, message):
         print(f'Student application updated to "{status}".')
     else:
         print('Failed to update application status.')
@@ -683,6 +695,52 @@ def browse_positions_command():
         shortlist = view_position_shortlist(pos.id)
         print(f"  Applicants: {len(shortlist) if shortlist else 0}")
         print("")
+
+@student_cli.command("apply", help="Apply to a position")
+def apply_to_position_command():
+    students = get_all_students()
+    if not students:
+        print('No students found. Cannot apply to position.')
+        return
+
+    print("\nStudents:\n")
+    for stu in students:
+        print(f'ID: {stu.id} Name: {stu.username}')
+    
+    student_id = input('\nEnter student ID: ')
+    student = get_student_by_id(student_id)
+    if not student:
+        print('Student not found.')
+        return
+
+    positions = get_all_positions()
+    if not positions:
+        print('No positions available to apply to.')
+        return
+
+    print("\nAvailable Positions:\n")
+    for pos in positions:
+        employer = get_employer_by_id(pos.employerID)
+        print(f'ID: {pos.id} Title: {pos.positionTitle} - {employer.companyName}')
+    
+    position_id = input('\nEnter position ID to apply to: ')
+    position = get_position_by_id(position_id)
+    if not position:
+        print('Position not found.')
+        return
+
+    create_application(student_id, position_id)
+
+    # sp = Shortlist.query.filter_by(studentID=student_id, positionID=position_id).first()
+    # if sp:
+    #     print('This student has already applied to this position.')
+    #     return
+
+    # Add to shortlist with status 'pending'
+    # new_shortlist = Shortlist(studentID=student_id, positionID=position_id)#, status='pending')
+    # db.session.add(new_shortlist)
+    # db.session.commit()
+    print(f'\nSuccessfully applied to position {position.positionTitle}.\n')
 
 app.cli.add_command(student_cli)
 
