@@ -545,6 +545,38 @@
 		},
 		{
 			"name": "New Request",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "d36ace2f-3a8a-49ed-bd06-bf44ded48cfb",
+						"exec": [
+							"pm.test(\"Response status code is 200\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Response time is in an acceptable range\", function () {\r",
+							"    pm.expect(pm.response.responseTime).to.be.below(500); // assuming an acceptable range is below 500ms\r",
+							"});\r",
+							"\r",
+							"pm.test('Response has the required fields', function () {\r",
+							"    const responseData = pm.response.json();\r",
+							"    pm.expect(responseData).to.be.an('array');\r",
+							"    responseData.forEach(function (shortlist) {\r",
+							"        pm.expect(shortlist).to.have.property('id');\r",
+							"        pm.expect(shortlist).to.have.property('student_id');\r",
+							"        pm.expect(shortlist).to.have.property('position_id');\r",
+							"        pm.expect(shortlist).to.have.property('application_state');\r",
+							"    });\r",
+							"})\r",
+							""
+						],
+						"type": "text/javascript",
+						"packages": {},
+						"requests": {}
+					}
+				}
+			],
 			"id": "42549608-6a3ca81e-6fd9-46d7-80d2-1a93eaa969c6",
 			"protocolProfileBehavior": {
 				"disableBodyPruning": true
