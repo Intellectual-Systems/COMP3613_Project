@@ -544,7 +544,7 @@
 			"response": []
 		},
 		{
-			"name": "New Request",
+			"name": "(Student) Apply to Position",
 			"event": [
 				{
 					"listen": "test",
