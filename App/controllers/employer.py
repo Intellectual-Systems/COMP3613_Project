@@ -48,12 +48,6 @@ def view_position_shortlist(positionID):
         return None
     return shortlist
 
-def create_position(employerID, positionTitle, department, description):
-    pos = Position(employerID=employerID, positionTitle=positionTitle, department=department, description=description)
-    db.session.add(pos)
-    db.session.commit()
-    return pos
-
 def acceptReject(employerID, studentID, positionID, status, message=None):
 
     print("Beginning accept rject process...")
@@ -110,7 +104,7 @@ def acceptReject(employerID, studentID, positionID, status, message=None):
                 os_app.set_state('Rejected')
     print("Application state: " + application.application_state)
     db.session.commit()
-    return True
+    return sh
 
 
     # return False

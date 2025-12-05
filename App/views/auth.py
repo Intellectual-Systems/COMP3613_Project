@@ -74,7 +74,21 @@ def user_login_api():
 @auth_views.route('/api/signup', methods=['POST'])
 def signup_api():
     data = request.json
-    status = create_user(data['username'], data['password'], data['type'])
+    type = data['type']
+    if type not in ['student', 'employer', 'staff']:
+        flash('Signup failed, invalid user type!'), 401
+        return redirect(request.referrer)
+    
+    if type == 'student':
+        status = create_user(data['username'], data['password'], type,
+                             degree=data.get('degree', ''),
+                             gpa=float(data.get('gpa', 0.0)),
+                             resume=data.get('resume', ''))
+    elif type == 'employer':
+        status = create_user(data['username'], data['password'], type, companyName=data.get('companyName', ''))
+    elif type == 'staff':
+        status = create_user(data['username'], data['password'], type,
+                             employerID=int(data.get('employerID', 0)))
     if not status:
         return jsonify(message='Signup failed, username taken!'), 401
     else:

@@ -1,9 +1,11 @@
 # from App.models import Position, Employer
-# from App.database import db
+from App.database import db
 from App.models.position import Position
 
 def create_position(employerID, positionTitle, department, description):
     pos = Position(employerID=employerID, positionTitle=positionTitle, department=department, description=description)
+    if not pos:
+        return None
     db.session.add(pos)
     db.session.commit()
     return pos

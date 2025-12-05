@@ -39,6 +39,14 @@ class Application(db.Model):
     
     def employer_reject(self):
         self.get_state().employer_reject(self)
+        
+    def get_json(self):
+        return {
+            'id': self.id,
+            'student_id': self.student_id,
+            'position_id': self.position_id,
+            'application_state': self.application_state
+        }
 
 # class Application(ABC):
 #     __tablename__ = 'applications'

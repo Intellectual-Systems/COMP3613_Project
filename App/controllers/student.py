@@ -27,11 +27,11 @@ def get_Shortlist_by_id(studentID):
         return None
     return stu.positions
 
-def get_all_Shortlists():
-    stu_pos = Shortlist.query.all()
-    if not stu_pos:
+def get_all_Shortlists_by_id(studentID):
+    positions = Shortlist.query.filter_by(studentID=studentID).all()
+    if not positions:
         return None
-    return stu_pos
+    return positions
 
 def get_all_students():
     students = Student.query.all()

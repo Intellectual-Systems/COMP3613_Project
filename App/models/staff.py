@@ -10,6 +10,7 @@ class Staff(User):
     def __init__(self, username, password, employerID):
         self.username = username
         self.set_password(password)
+        self.role = "staff"
         self.employerID = employerID
 
     def get_json(self):

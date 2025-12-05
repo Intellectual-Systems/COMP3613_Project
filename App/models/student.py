@@ -44,6 +44,7 @@ class Student(User):
     def __init__(self, username, password, degree, gpa, resume):
         self.username = username
         self.set_password(password)
+        self.role = "student"
         self.degree = degree
         self.gpa = gpa
         self.resume = resume

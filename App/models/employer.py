@@ -9,6 +9,7 @@ class Employer(User):
     def __init__(self, username, password, companyName):
         self.username = username
         self.set_password(password)
+        self.role = "employer"
         self.companyName = companyName
     
     def get_json(self):

@@ -4,7 +4,7 @@ from App.database import db
 def get_application(student_id, position_id):
     return db.session.query(Application).filter_by(student_id=student_id, position_id=position_id).first()
 
-def create_application(position_id, student_id):
+def create_application(student_id, position_id):
     try:
         # Check if Application already exists
         existing_app = get_application(student_id, position_id)

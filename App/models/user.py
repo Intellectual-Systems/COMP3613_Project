@@ -6,11 +6,11 @@ class User(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     username =  db.Column(db.String(20), nullable=False, unique=True)
     password = db.Column(db.String(256), nullable=False)
-    # role = db.Column(db.String(50), nullable=False)
+    role = db.Column(db.String(50), nullable=False)
 
-    # student = db.relationship('Student', backref='user', uselist=False)
-    # employer = db.relationship('Employer', backref='user', uselist=False)
-    # staff = db.relationship('Staff', backref='user', uselist=False)
+    student = db.relationship('Student', backref='user', uselist=False)
+    employer = db.relationship('Employer', backref='user', uselist=False)
+    staff = db.relationship('Staff', backref='user', uselist=False)
     
     def __init__(self, username, password, role):
         self.username = username

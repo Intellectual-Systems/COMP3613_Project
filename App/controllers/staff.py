@@ -57,6 +57,12 @@ def addToShortlist(staffID, positionID, studentID):
 
     # Add the student to the position's shortlist
 
+    found = Shortlist.query.filter_by(positionID=positionID, studentID=studentID).first()
+
+    if found:
+        print("Student already in shortlist")
+        return False
+
     position.shortlist.append(student)
     print("Finding application...")
     # Get the application from the student and update the state
@@ -74,4 +80,4 @@ def addToShortlist(staffID, positionID, studentID):
     db.session.commit()
 
     print("Student added to shortlist successfully! Application state: " + application.application_state)
-    return True
+    return position.shortlist

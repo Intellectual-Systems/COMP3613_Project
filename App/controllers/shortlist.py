@@ -1,7 +1,8 @@
-# from sqlalchemy import false, or_
-# from App.models import Shortlist, Position, Staff, Student, PositionStatus
+from sqlalchemy import false, or_
+from App.models import Shortlist, Position, Staff, Student
+# from App.models.position import PositionStatus
 # from App.models.shortlist import DecisionStatus
-# from App.database import db
+from App.database import db
 
 # def add_student_to_shortlist(student_id, position_id, staff_id):
 #     # The student_id and staff_id might be either user_id OR the internal Student/Staff id

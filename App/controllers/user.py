@@ -1,29 +1,42 @@
 from App.models import User, Student, Employer, Staff
 from App.database import db
 
-def create_user(username, password, user_type):
+def create_user(username, password, user_type, **kwargs):
     try:
         # Check if user already exists
         existing_user = get_user_by_username(username)
         if existing_user:
             return False
         
-        newuser = User(username=username, password=password, role=user_type)
-        db.session.add(newuser)
-        db.session.flush() 
-        
         role_user = None
         
         if user_type == "student":
-            student = Student(username=username, user_id=newuser.id)
+            
+            for(key, value) in kwargs.items():
+                if key == "degree":
+                    degree = value
+                elif key == "gpa":
+                    gpa = value
+                elif key == "resume":
+                    resume = value
+                    
+            student = Student(username=username, password=password, degree=degree, gpa=gpa, resume=resume)
             db.session.add(student)
             role_user = student
         elif user_type == "employer":
-            employer = Employer(username=username, user_id=newuser.id)
+            
+            for(key, value) in kwargs.items():
+                if key == "companyName":
+                    companyName = value
+            employer = Employer(username=username, password=password, companyName=companyName)
             db.session.add(employer)
             role_user = employer
+            
         elif user_type == "staff":
-            staff = Staff(username=username, user_id=newuser.id)
+            for(key, value) in kwargs.items():
+                if key == "employerID":
+                    employerID = value
+            staff = Staff(username=username, password=password, employerID=employerID)
             db.session.add(staff)
             role_user = staff
         else:
