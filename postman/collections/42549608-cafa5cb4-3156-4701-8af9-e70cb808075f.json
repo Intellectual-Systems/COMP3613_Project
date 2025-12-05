@@ -143,68 +143,6 @@
 			"response": []
 		},
 		{
-			"name": "Sign Up - Failed",
-			"event": [
-				{
-					"listen": "test",
-					"script": {
-						"id": "823e8280-59d8-4ba5-92ab-028fb8266c49",
-						"exec": [
-							"pm.test('Response status code is 401', function () {\r",
-							"    pm.expect(pm.response.code).to.equal(401);\r",
-							"})\r",
-							"\r",
-							"pm.test(\"Response time is in an acceptable range\", function () {\r",
-							"    pm.expect(pm.response.responseTime).to.be.below(500);\r",
-							"});\r",
-							"\r",
-							"let responseJson = pm.response.json();\r",
-							"\r",
-							"pm.test(\"Signup failed due to username taken\", function () {\r",
-							"    pm.expect(responseJson.message).to.eql(\"Signup failed, username taken!\");\r",
-							"});\r",
-							""
-						],
-						"type": "text/javascript",
-						"packages": {},
-						"requests": {}
-					}
-				}
-			],
-			"id": "42549608-fe4fdf86-e072-4db9-986a-d1672a3d502e",
-			"protocolProfileBehavior": {
-				"disableBodyPruning": true
-			},
-			"request": {
-				"auth": {
-					"type": "noauth"
-				},
-				"method": "POST",
-				"header": [
-					{
-						"key": "Content-Type",
-						"value": "application/json",
-						"type": "text"
-					}
-				],
-				"body": {
-					"mode": "raw",
-					"raw": "{\n\t\"username\":\"tim\",\n\t\"password\":\"timpass\",\n    \"type\":\"employer\"\n}"
-				},
-				"url": {
-					"raw": "{{host}}/api/signup",
-					"host": [
-						"{{host}}"
-					],
-					"path": [
-						"api",
-						"signup"
-					]
-				}
-			},
-			"response": []
-		},
-		{
 			"name": "Sign Up - Success",
 			"event": [
 				{
@@ -273,6 +211,68 @@
 					]
 				},
 				"description": "Signs up a user"
+			},
+			"response": []
+		},
+		{
+			"name": "Sign Up - Failed",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "823e8280-59d8-4ba5-92ab-028fb8266c49",
+						"exec": [
+							"pm.test('Response status code is 401', function () {\r",
+							"    pm.expect(pm.response.code).to.equal(401);\r",
+							"})\r",
+							"\r",
+							"pm.test(\"Response time is in an acceptable range\", function () {\r",
+							"    pm.expect(pm.response.responseTime).to.be.below(500);\r",
+							"});\r",
+							"\r",
+							"let responseJson = pm.response.json();\r",
+							"\r",
+							"pm.test(\"Signup failed due to username taken\", function () {\r",
+							"    pm.expect(responseJson.message).to.eql(\"Signup failed, username taken!\");\r",
+							"});\r",
+							""
+						],
+						"type": "text/javascript",
+						"packages": {},
+						"requests": {}
+					}
+				}
+			],
+			"id": "42549608-fe4fdf86-e072-4db9-986a-d1672a3d502e",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"username\":\"tim\",\n\t\"password\":\"timpass\",\n    \"type\":\"employer\"\n}"
+				},
+				"url": {
+					"raw": "{{host}}/api/signup",
+					"host": [
+						"{{host}}"
+					],
+					"path": [
+						"api",
+						"signup"
+					]
+				}
 			},
 			"response": []
 		},
