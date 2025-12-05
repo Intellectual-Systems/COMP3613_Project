@@ -1380,6 +1380,7 @@
 				{
 					"listen": "test",
 					"script": {
+						"id": "6b11c2b8-1946-4bf1-b9e7-42c83ce56c5a",
 						"exec": [
 							"pm.test(\"Response status code is 200\", function () {",
 							"    pm.response.to.have.status(200);",
@@ -1393,19 +1394,16 @@
 							"    const responseData = pm.response.json();",
 							"    pm.expect(responseData).to.be.an('array');",
 							"    responseData.forEach(function (shortlist) {",
-							"        pm.expect(shortlist).to.have.property('id');",
-							"        pm.expect(shortlist).to.have.property('title');",
-							"        pm.expect(shortlist).to.have.property('student_id');",
-							"        pm.expect(shortlist).to.have.property('position_id');",
-							"        pm.expect(shortlist).to.have.property('staff_id');",
+							"        pm.expect(shortlist).to.have.property('employer_response');",
+							"        pm.expect(shortlist).to.have.property('studentID');",
+							"        pm.expect(shortlist).to.have.property('positionID');",
 							"        pm.expect(shortlist).to.have.property('status');",
 							"    });",
 							"})"
 						],
 						"type": "text/javascript",
 						"packages": {},
-						"requests": {},
-						"id": "6b11c2b8-1946-4bf1-b9e7-42c83ce56c5a"
+						"requests": {}
 					}
 				}
 			],
