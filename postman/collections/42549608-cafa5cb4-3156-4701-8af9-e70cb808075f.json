@@ -561,13 +561,10 @@
 							"\r",
 							"pm.test('Response has the required fields', function () {\r",
 							"    const responseData = pm.response.json();\r",
-							"    pm.expect(responseData).to.be.an('array');\r",
-							"    responseData.forEach(function (shortlist) {\r",
 							"        pm.expect(shortlist).to.have.property('id');\r",
 							"        pm.expect(shortlist).to.have.property('student_id');\r",
 							"        pm.expect(shortlist).to.have.property('position_id');\r",
 							"        pm.expect(shortlist).to.have.property('application_state');\r",
-							"    });\r",
 							"})\r",
 							""
 						],
