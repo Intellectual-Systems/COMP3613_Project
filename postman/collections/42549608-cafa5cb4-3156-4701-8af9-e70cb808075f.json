@@ -1188,18 +1188,6 @@
 			"response": []
 		},
 		{
-			"name": "Users",
-			"id": "42549608-57409435-a48f-4afb-81e1-50f7af63acca",
-			"protocolProfileBehavior": {
-				"disableBodyPruning": true
-			},
-			"request": {
-				"method": "GET",
-				"header": []
-			},
-			"response": []
-		},
-		{
 			"name": "Permission Test",
 			"id": "42549608-7098d394-da35-4275-b7ef-fbd2bb96ef4a",
 			"protocolProfileBehavior": {
