@@ -550,8 +550,33 @@
 				"disableBodyPruning": true
 			},
 			"request": {
+				"auth": {
+					"type": "noauth"
+				},
 				"method": "GET",
-				"header": []
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"title\": \"Dentist\",\n    \"number\": \"3\"\n}"
+				},
+				"url": {
+					"raw": "{{host}}/api/positions/apply/2",
+					"host": [
+						"{{host}}"
+					],
+					"path": [
+						"api",
+						"positions",
+						"apply",
+						"2"
+					]
+				}
 			},
 			"response": []
 		},
