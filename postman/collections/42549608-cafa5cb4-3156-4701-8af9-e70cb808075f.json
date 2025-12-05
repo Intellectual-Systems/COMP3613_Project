@@ -907,7 +907,7 @@
 			"response": []
 		},
 		{
-			"name": "List Employers Copy",
+			"name": "List Employers",
 			"event": [
 				{
 					"listen": "test",
