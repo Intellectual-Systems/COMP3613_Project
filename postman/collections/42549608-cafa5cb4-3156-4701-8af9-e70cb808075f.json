@@ -1251,9 +1251,8 @@
 							"    pm.expect(responseData).to.be.an('array');",
 							"    responseData.forEach(function (position) {",
 							"        pm.expect(position).to.have.property('id');",
-							"        pm.expect(position).to.have.property('title');",
-							"        pm.expect(position).to.have.property('status');",
-							"        pm.expect(position).to.have.property('employer_id');",
+							"        pm.expect(position).to.have.property('positionTitle');",
+							"        pm.expect(position).to.have.property('employerID');",
 							"    });",
 							"})",
 							""
