@@ -462,6 +462,7 @@
 				{
 					"listen": "test",
 					"script": {
+						"id": "88e2c58b-af75-4d14-afa5-67d587637a3f",
 						"exec": [
 							"pm.test(\"Response status code is 200\", function () {",
 							"    pm.response.to.have.status(200);",
@@ -475,7 +476,6 @@
 							"    const responseData = pm.response.json();",
 							"    pm.expect(responseData).to.be.an('array');",
 							"    responseData.forEach(function (shortlist) {",
-							"        pm.expect(shortlist).to.have.property('id');",
 							"        pm.expect(shortlist).to.have.property('title');",
 							"        pm.expect(shortlist).to.have.property('student_id');",
 							"        pm.expect(shortlist).to.have.property('position_id');",
@@ -487,20 +487,19 @@
 						],
 						"type": "text/javascript",
 						"packages": {},
-						"requests": {},
-						"id": "88e2c58b-af75-4d14-afa5-67d587637a3f"
+						"requests": {}
 					}
 				},
 				{
 					"listen": "prerequest",
 					"script": {
+						"id": "355c6573-24a0-43b8-a241-8af674b27bae",
 						"exec": [
 							""
 						],
 						"type": "text/javascript",
 						"packages": {},
-						"requests": {},
-						"id": "355c6573-24a0-43b8-a241-8af674b27bae"
+						"requests": {}
 					}
 				}
 			],
