@@ -1311,29 +1311,27 @@
 				{
 					"listen": "test",
 					"script": {
+						"id": "d59a26ff-8c31-4fd9-b604-536a7e4f9470",
 						"exec": [
 							"pm.test(\"Response status code is 200\", function () {",
 							"    pm.response.to.have.status(200);",
 							"});",
 							"",
 							"pm.test(\"Response time is in an acceptable range\", function () {",
-							"    pm.expect(pm.response.responseTime).to.be.below(500); // assuming an acceptable range is below 500ms",
+							"    pm.expect(pm.response.responseTime).to.be.below(500); ",
 							"});",
 							"",
 							"pm.test('Response has the required fields', function () {",
 							"    const shortlist = pm.response.json();",
-							"        pm.expect(shortlist).to.have.property('id');",
-							"        pm.expect(shortlist).to.have.property('position_id');",
-							"        pm.expect(shortlist).to.have.property('staff_id');",
+							"        pm.expect(shortlist).to.have.property('positionID');",
 							"        pm.expect(shortlist).to.have.property('status');",
-							"        pm.expect(shortlist).to.have.property('student_id');",
-							"        pm.expect(shortlist).to.have.property('title');",
+							"        pm.expect(shortlist).to.have.property('studentID');",
+							"        pm.expect(shortlist).to.have.property('employer_response');",
 							"})"
 						],
 						"type": "text/javascript",
 						"packages": {},
-						"requests": {},
-						"id": "540bef9b-7369-4b27-82de-d0f8b733d5f9"
+						"requests": {}
 					}
 				}
 			],
