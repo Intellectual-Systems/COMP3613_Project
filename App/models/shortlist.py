@@ -14,6 +14,7 @@ class Shortlist(db.Model):
     def __init__(self, studentID, positionID):
         self.studentID = studentID
         self.positionID = positionID
+        self.status = 'pending'
 
     def get_json(self):
         return {
