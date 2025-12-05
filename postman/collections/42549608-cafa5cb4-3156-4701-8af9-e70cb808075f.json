@@ -815,8 +815,8 @@
 							"\r",
 							"pm.test('Response has the required fields', function () {\r",
 							"    const responseData = pm.response.json();\r",
-							"        pm.expect(responseData).to.have.property('student_id');\r",
-							"        pm.expect(responseData).to.have.property('position_id');\r",
+							"        pm.expect(responseData).to.have.property('studentID');\r",
+							"        pm.expect(responseData).to.have.property('positionID');\r",
 							"        pm.expect(responseData).to.have.property('status');\r",
 							"})"
 						],
